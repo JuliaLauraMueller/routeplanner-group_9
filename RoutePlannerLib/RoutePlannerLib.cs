@@ -23,12 +23,13 @@ namespace RoutePlannerLib
 
         public double Distance(WayPoint target)
         {
-            double grad;
-            int r = 6371;
-            grad = r * Math.Acos(Math.Sin(this.Latitude * (Math.PI / 180)) * Math.Sin(target.Latitude * (Math.PI / 180))
-                + Math.Cos(this.Latitude * (Math.PI / 180)) * Math.Cos(target.Latitude * (Math.PI / 180))
-                * Math.Cos(this.Longitude * (Math.PI / 180) - target.Longitude * (Math.PI / 180)));
-            return grad;
+            double gradToRad = Math.PI / 180;
+            int radius = 6371;
+
+            double rad = radius * Math.Acos(Math.Sin(this.Latitude * gradToRad) * Math.Sin(target.Latitude * gradToRad)
+                + Math.Cos(this.Latitude * gradToRad) * Math.Cos(target.Latitude * gradToRad)
+                * Math.Cos(this.Longitude * gradToRad - target.Longitude * gradToRad));
+            return rad;
         }
     }
 
@@ -98,9 +99,10 @@ namespace RoutePlannerLib
                         double.Parse(cityPropertyArray[3]), double.Parse(cityPropertyArray[4])));
 
                     counter++;
-                    Console.WriteLine("Liste: " + cityList[0].Name);
+                    
                 }
-
+                Console.WriteLine("Liste Stadtname: " + cityList[0].Name);
+                Console.WriteLine("Liste Stadtname: " + cityList[1].Name);
             }
 
             return counter;
@@ -110,19 +112,16 @@ namespace RoutePlannerLib
 
         public IList<City> FindNeighbours(WayPoint location, double distance)
         {
-            List<City> nearByCities = new List<City>();
+           List<City> nearByCities = new List<City>();
 
             for (int i = 0; i < cityList.Count; i++)
             {
-                //Console.WriteLine("Hallo");
-                //Console.WriteLine(location.Distance(cityList[i].Location));
                 if (location.Distance(cityList[i].Location) < distance)
                 {
                     nearByCities.Add(cityList[i]);
-                    //Console.WriteLine("Hallo");
+                    
                 }
             }
-
             return nearByCities;
         }
 
