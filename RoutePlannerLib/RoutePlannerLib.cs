@@ -36,10 +36,10 @@ namespace RoutePlannerLib
     {
         public string Name;
         public string Country;
-        public double Population;
+        public int Population;
         public WayPoint Location;
 
-        public City(string name, string country, double population, double latitude, double longitude)
+        public City(string name, string country, int population, double latitude, double longitude)
         {
             Name = name;
             Country = country;
@@ -47,6 +47,7 @@ namespace RoutePlannerLib
             Location = new WayPoint(name, latitude, longitude);
 
         }
+        
     }
 
     public class Cities
@@ -91,29 +92,45 @@ namespace RoutePlannerLib
                 string cityProperty;
                 string cityName;
                 string countryName;
-                double cityPopulation;
+                int cityPopulation;
                 double cityLatitude;
                 double cityLongitute;
 
+                //cityProperty = reader.ReadLine();
+                //cityName = cityProperty.Split("/t").ToString();
+                //countryName = cityProperty.Split("/t").ToString();
+                //Console.WriteLine("Ausgabe des Namen: " + countryName);
+
+                while((cityProperty = reader.ReadLine()) != null){
+                    string[] cityPropertyArray = cityProperty.Split("/t");
+                    //cityList.Add(new City(cityPropertyArray[0], cityPropertyArray[1], int.Parse(cityPropertyArray[2]),
+                    //    double.Parse(cityPropertyArray[3]), double.Parse(cityPropertyArray[5])));
+
+                    counter++;
+                    Console.WriteLine("Liste mit Cities: " + cityPropertyArray[0].ToString());
+                }
+
                 for (int i = 0; i < 10; i++)
                 {
-                    cityProperty = reader.ReadLine();
-                    cityName = cityProperty.Split("/t").ToString();
-                    countryName = cityProperty.Split("/t").ToString();
-                    // Convert funktioniert noch nicht richtig, Wieso?
-                    cityPopulation = Convert.ToDouble(cityProperty.Split("/t").ToString());
-                    cityLatitude = Convert.ToDouble(cityProperty.Split("/t").ToString());
-                    cityLongitute = Convert.ToDouble(cityProperty.Split("/t").ToString());
+                    //cityProperty = reader.ReadLine();
+                    //cityName = cityProperty.Split("/t").ToString();
+                    //countryName = cityProperty.Split("/t").ToString();
+                    //// Convert funktioniert noch nicht richtig, Wieso?
+                    //cityPopulation = int.Parse(cityProperty.Split("/t").ToString());
+                    //cityLatitude = double.Parse(cityProperty.Split("/t").ToString());
+                    //cityLongitute = double.Parse(cityProperty.Split("/t").ToString());
 
-                    cityList.Add(new City(cityName, countryName, cityPopulation, cityLatitude, cityLongitute));
-                    Console.WriteLine(cityList);
-                    
-                    Console.WriteLine(reader.ReadLine());
-                    counter++;
+                    //cityList.Add(new City(cityName, countryName, cityPopulation, cityLatitude, cityLongitute));
+                    //Console.WriteLine(cityList);
+                   
+                    //Console.WriteLine("Ausgabe des eingelesenen Files: " + reader.ReadLine());
+                    //counter++;
                 }
             }
+
             return counter;
         }
+
 
         public int AddCity(City city)
         {

@@ -20,9 +20,9 @@ namespace RoutePlannerConsole
             Console.WriteLine(wayPoint.ToString());
             Console.WriteLine(wayPoint2.ToString());
             Console.WriteLine($"Der Abstand zwischen {bern.Name} und {tripolis.Name} ist {tripolis.Distance(bern):F2} km");
-            //Console.WriteLine(cities.ReadCities("./citiesTestDataLab2.txt"));
-            Console.WriteLine(cities.AddCity(city1));
-            Console.WriteLine(cities.AddCity(city1));
+            Console.WriteLine("Anzahl der Cities: " + cities.ReadCities("./citiesTestDataLab2.txt"));
+            Console.WriteLine("Anzahl Cities: " + cities.AddCity(city1));
+            Console.WriteLine("Anzahl Cities: " + cities.AddCity(city1));
         }
     }
 }
