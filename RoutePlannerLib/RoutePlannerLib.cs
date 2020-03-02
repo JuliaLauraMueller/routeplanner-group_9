@@ -90,45 +90,40 @@ namespace RoutePlannerLib
             using (var reader = new StreamReader(filename))
             {
                 string cityProperty;
-                string cityName;
-                string countryName;
-                int cityPopulation;
-                double cityLatitude;
-                double cityLongitute;
 
-                //cityProperty = reader.ReadLine();
-                //cityName = cityProperty.Split("/t").ToString();
-                //countryName = cityProperty.Split("/t").ToString();
-                //Console.WriteLine("Ausgabe des Namen: " + countryName);
-
-                while((cityProperty = reader.ReadLine()) != null){
-                    string[] cityPropertyArray = cityProperty.Split("/t");
-                    //cityList.Add(new City(cityPropertyArray[0], cityPropertyArray[1], int.Parse(cityPropertyArray[2]),
-                    //    double.Parse(cityPropertyArray[3]), double.Parse(cityPropertyArray[5])));
+                while ((cityProperty = reader.ReadLine()) != null)
+                {
+                    string[] cityPropertyArray = cityProperty.Split("\t");
+                    cityList.Add(new City(cityPropertyArray[0].ToString(), cityPropertyArray[1].ToString(), int.Parse(cityPropertyArray[2]),
+                        double.Parse(cityPropertyArray[3]), double.Parse(cityPropertyArray[4])));
 
                     counter++;
-                    Console.WriteLine("Liste mit Cities: " + cityPropertyArray[0].ToString());
+                    Console.WriteLine("Liste: " + cityList[0].Name);
                 }
 
-                for (int i = 0; i < 10; i++)
-                {
-                    //cityProperty = reader.ReadLine();
-                    //cityName = cityProperty.Split("/t").ToString();
-                    //countryName = cityProperty.Split("/t").ToString();
-                    //// Convert funktioniert noch nicht richtig, Wieso?
-                    //cityPopulation = int.Parse(cityProperty.Split("/t").ToString());
-                    //cityLatitude = double.Parse(cityProperty.Split("/t").ToString());
-                    //cityLongitute = double.Parse(cityProperty.Split("/t").ToString());
-
-                    //cityList.Add(new City(cityName, countryName, cityPopulation, cityLatitude, cityLongitute));
-                    //Console.WriteLine(cityList);
-                   
-                    //Console.WriteLine("Ausgabe des eingelesenen Files: " + reader.ReadLine());
-                    //counter++;
-                }
             }
 
             return counter;
+        }
+
+        
+
+        public IList<City> FindNeighbours(WayPoint location, double distance)
+        {
+            List<City> nearByCities = new List<City>();
+
+            for (int i = 0; i < cityList.Count; i++)
+            {
+                //Console.WriteLine("Hallo");
+                //Console.WriteLine(location.Distance(cityList[i].Location));
+                if (location.Distance(cityList[i].Location) < distance)
+                {
+                    nearByCities.Add(cityList[i]);
+                    //Console.WriteLine("Hallo");
+                }
+            }
+
+            return nearByCities;
         }
 
 

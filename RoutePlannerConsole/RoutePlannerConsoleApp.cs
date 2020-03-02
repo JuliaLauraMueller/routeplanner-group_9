@@ -23,6 +23,8 @@ namespace RoutePlannerConsole
             Console.WriteLine("Anzahl der Cities: " + cities.ReadCities("./citiesTestDataLab2.txt"));
             Console.WriteLine("Anzahl Cities: " + cities.AddCity(city1));
             Console.WriteLine("Anzahl Cities: " + cities.AddCity(city1));
+
+            Console.WriteLine(cities.FindNeighbours(city1.Location, 9526.247927408867).Count);
         }
     }
 }
