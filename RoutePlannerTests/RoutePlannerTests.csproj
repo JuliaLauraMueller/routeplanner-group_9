@@ -21,4 +21,9 @@
   <ItemGroup>
     <ProjectReference Include="..\RoutePlannerLib\RoutePlannerLib.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="citiesTestDataLab2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
