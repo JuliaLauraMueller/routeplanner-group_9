@@ -101,8 +101,8 @@ namespace RoutePlannerLib
                     counter++;
                     
                 }
-                Console.WriteLine("Liste Stadtname: " + cityList[0].Name);
-                Console.WriteLine("Liste Stadtname: " + cityList[1].Name);
+                // Console.WriteLine("Liste Stadtname: " + cityList[0].Name);
+                // Console.WriteLine("Liste Stadtname: " + cityList[1].Name);
             }
 
             return counter;
