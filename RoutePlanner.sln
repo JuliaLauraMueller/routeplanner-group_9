@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoutePlannerConsole", "Rout
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoutePlannerLib", "RoutePlannerLib\RoutePlannerLib.csproj", "{5EDF90A4-AD31-4EF1-A123-D9DE5B6810AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoutePlannerTests", "RoutePlannerTests\RoutePlannerTests.csproj", "{C65247AB-4B21-4EA2-A342-D0DD0624AA58}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5EDF90A4-AD31-4EF1-A123-D9DE5B6810AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EDF90A4-AD31-4EF1-A123-D9DE5B6810AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EDF90A4-AD31-4EF1-A123-D9DE5B6810AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C65247AB-4B21-4EA2-A342-D0DD0624AA58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C65247AB-4B21-4EA2-A342-D0DD0624AA58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C65247AB-4B21-4EA2-A342-D0DD0624AA58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C65247AB-4B21-4EA2-A342-D0DD0624AA58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
