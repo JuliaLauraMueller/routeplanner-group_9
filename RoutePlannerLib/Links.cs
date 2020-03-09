@@ -82,7 +82,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		public Link newLink { get; set; }
 	}
 
-	// Obwerving-Methode
+	// Overwriting-Methode
 	public class RouteRequestWatcher
 	{
 

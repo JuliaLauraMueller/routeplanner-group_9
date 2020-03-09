@@ -90,6 +90,12 @@ namespace RoutePlannerLib
                 return city.Name == cityName;
             };
         }
+
+        public City FindCity(Predicate<City> cityName)
+        {
+            return cityList.Find(cityName);
+        }
+
         public City this[string cityName]
         {
             get
@@ -98,18 +104,21 @@ namespace RoutePlannerLib
                 {
                     throw new ArgumentNullException();
                 }
-                try {
-                    return this.cityList.Find(ByName(cityName));
-                }
-                catch (InvalidCastException e) {
-                    throw new KeyNotFoundException("City not found!", e);
-                }
-            }
-        }
 
-        public City FindCity(Predicate<City> cityName)
-        {
-            return cityList.Find(cityName);
+                if(cityName != null)
+                {
+                    return this.cityList.Find(ByName(cityName.ToLower())); // Klein-Gross Buchstabe toLower umwandeln
+                }
+                else
+                    throw new KeyNotFoundException("City not found!");
+
+                //try {
+                //    return this.cityList.Find(ByName(cityName));
+                //}
+                //catch (InvalidCastException e) {
+                //    throw new KeyNotFoundException("City not found!", e);
+                //}
+            }
         }
 
         public int ReadCities(string filename){
