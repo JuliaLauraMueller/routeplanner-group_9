@@ -5,7 +5,7 @@ using RoutePlannerLib;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
 {
-   /** [TestClass]
+    [TestClass]
     public class RouteRequestEventArgsTest
     {
         [TestMethod]
@@ -21,5 +21,5 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
             Assert.AreEqual(TransportMode.Car, eventArgs.Mode);
 
         }
-    }**/
+    }
 }
