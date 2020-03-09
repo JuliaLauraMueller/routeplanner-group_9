@@ -84,6 +84,34 @@ namespace RoutePlannerLib
 
         }
 
+        public Predicate<City> ByName(string cityName) {
+            return delegate (City city)
+            {
+                return city.Name == cityName;
+            };
+        }
+        public City this[string cityName]
+        {
+            get
+            {
+                if (cityName == null)
+                {
+                    throw new ArgumentNullException();
+                }
+                try {
+                    return this.cityList.Find(ByName(cityName));
+                }
+                catch (InvalidCastException e) {
+                    throw new KeyNotFoundException("City not found!", e);
+                }
+            }
+        }
+
+        public City FindCity(Predicate<City> cityName)
+        {
+            return cityList.Find(cityName);
+        }
+
         public int ReadCities(string filename){
 
             int counter = 0;
