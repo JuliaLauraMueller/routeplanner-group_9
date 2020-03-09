@@ -1,6 +1,7 @@
 using System.IO;
 using System.Collections.Generic;
 using RoutePlannerLib;
+using System;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 {
@@ -13,8 +14,9 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		private List<Link> links = new List<Link>();
 		private Cities cities;
 
-		private delegate void RouteRequestHandler(object sender, RouteRequestEventArgs e);
-		private event RouteRequestHandler RouteRequested;
+		public delegate void RouteRequestHandler(object sender, RouteRequestEventArgs e);
+		public event RouteRequestHandler RouteRequested;
+		
 
 		public int Count { get { return links.Count; } }
 
@@ -78,5 +80,40 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		}
 
 		public Link newLink { get; set; }
+	}
+
+	// Obwerving-Methode
+	public class RouteRequestWatcher
+	{
+
+		private Dictionary<City, int> dict = new Dictionary<City, int>();
+		public void LogRouteRequests(object source, RouteRequestEventArgs args)
+		{
+			if (dict.ContainsKey(args.newLink.ToCity))
+			{
+				int count = dict[args.newLink.ToCity];
+				dict.Add(args.newLink.ToCity, count++);
+			}
+			else
+			{
+				dict.Add(args.newLink.ToCity, 1);
+			}
+
+			Console.WriteLine("Current Request State");
+			Console.WriteLine("----------------------");
+			foreach (var c in dict)
+			{
+				Console.WriteLine($"toCity: {c.Key.Name} has been requested {c.Value} times");
+			}
+		}
+
+		public int GetCityRequests(City city)
+		{
+			if (dict.ContainsKey(city))
+			{
+				return dict[city];
+			}
+			return 0;
+		}
 	}
 }
