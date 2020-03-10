@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace RoutePlannerLib
@@ -87,7 +88,7 @@ namespace RoutePlannerLib
         public Predicate<City> ByName(string cityName) {
             return delegate (City city)
             {
-                return city.Name == cityName;
+                return city.Name.ToLower() == cityName.ToLower(); // ToLower() vellech?
             };
         }
 
@@ -95,8 +96,6 @@ namespace RoutePlannerLib
         {
             return cityList.Find(cityName);
         }
-
-        // Funktion schreiebn für die Logik für Abfragen der Cities
 
         public City this[string cityName]
         {
@@ -107,7 +106,7 @@ namespace RoutePlannerLib
                     throw new ArgumentNullException();
                 }
 
-                var foundCity = this.cityList.Find(ByName(cityName.ToLower()));
+                var foundCity = this.cityList.Find(ByName(cityName));
                 //var foundCity = FindCity(ByName);
 
                 if (foundCity == null)
@@ -131,7 +130,7 @@ namespace RoutePlannerLib
                 {
                     string[] cityPropertyArray = cityProperty.Split("\t");
                     cityList.Add(new City(cityPropertyArray[0].ToString(), cityPropertyArray[1].ToString(), int.Parse(cityPropertyArray[2]),
-                        double.Parse(cityPropertyArray[3]), double.Parse(cityPropertyArray[4])));
+                        double.Parse(cityPropertyArray[3], CultureInfo.InvariantCulture), double.Parse(cityPropertyArray[4], CultureInfo.InvariantCulture)));
 
                     counter++;
                     
