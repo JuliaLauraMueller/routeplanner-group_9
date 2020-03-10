@@ -94,8 +94,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		{
 			if (dict.ContainsKey(args.ToCity))
 			{
-				int count = dict[args.ToCity];
-				dict.Add(args.ToCity, count++);
+				dict[args.ToCity]++;
 			}
 			else
 			{
@@ -106,7 +105,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 			Console.WriteLine("----------------------");
 			foreach (var c in dict)
 			{
-				Console.WriteLine($"toCity: {c.Key.Name} has been requested {c.Value} times");
+				Console.WriteLine($"ToCity: {c.Key.Name} has been requested {c.Value} times");
 			}
 		}
 

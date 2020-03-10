@@ -88,7 +88,7 @@ namespace RoutePlannerLib
         public Predicate<City> ByName(string cityName) {
             return delegate (City city)
             {
-                return city.Name.ToLower() == cityName.ToLower(); // ToLower() vellech?
+                return city.Name.Equals(cityName, StringComparison.InvariantCultureIgnoreCase); // ToLower() vellech?
             };
         }
 
