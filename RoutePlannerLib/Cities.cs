@@ -1,56 +1,12 @@
-﻿using System;
+﻿using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
 namespace RoutePlannerLib
 {
-    public class WayPoint 
-    { 
-        public string Name { get; set; } 
-        public double Longitude { get; set; } 
-        public double Latitude { get; set; } 
-        public WayPoint(string name, double latitude, double longitude)
-        { 
-            Name = name; 
-            Latitude = latitude; 
-            Longitude = longitude; 
-        }
 
-        public override string ToString()
-        {
-            return $"Waypoint: {this.Name} {this.Latitude:F2} / {this.Longitude:F2}";
-        }
-
-        public double Distance(WayPoint target)
-        {
-            double gradToRad = Math.PI / 180;
-            int radius = 6371;
-
-            double rad = radius * Math.Acos(Math.Sin(this.Latitude * gradToRad) * Math.Sin(target.Latitude * gradToRad)
-                + Math.Cos(this.Latitude * gradToRad) * Math.Cos(target.Latitude * gradToRad)
-                * Math.Cos(this.Longitude * gradToRad - target.Longitude * gradToRad));
-            return rad;
-        }
-    }
-
-    public class City
-    {
-        public string Name { get; set; }
-        public string Country { get; set; }
-        public int Population { get; set; }
-        public WayPoint Location { get; set; }
-
-        public City(string name, string country, int population, double latitude, double longitude)
-        {
-            Name = name;
-            Country = country;
-            Population = population;
-            Location = new WayPoint(name, latitude, longitude);
-
-        }
-        
-    }
 
     public class Cities
     {

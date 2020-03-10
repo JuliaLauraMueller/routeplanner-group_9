@@ -2,11 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
 using System.Collections.Generic;
-using System.Threading;
-using System.Globalization;
 using System.IO;
-using System.Reflection;
 using RoutePlannerLib;
+using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
 {

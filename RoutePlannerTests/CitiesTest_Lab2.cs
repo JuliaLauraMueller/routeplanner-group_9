@@ -1,5 +1,4 @@
-﻿// using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
-using RoutePlannerLib;
+﻿using RoutePlannerLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -7,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
 {

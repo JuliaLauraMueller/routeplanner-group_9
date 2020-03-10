@@ -1,7 +1,7 @@
 using System.IO;
 using System.Collections.Generic;
 using RoutePlannerLib;
-using System;
+using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 {
@@ -66,56 +66,6 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		{
 			RouteRequested?.Invoke(this, new RouteRequestEventArgs(cities[fromCity], cities[toCity], mode));
 			return new List<Link>();
-		}
-	}
-
-	public class RouteRequestEventArgs
-	{
-        public City FromCity { get; }
-		public City ToCity { get; }
-		public TransportMode Mode { get; }
-
-		public RouteRequestEventArgs(City fromCity, City toCity, TransportMode mode)
-		{
-			this.ToCity = toCity;
-			this.FromCity = fromCity;
-			this.Mode = mode;
-		}
-
-		//public Link newLink { get; set; }
-	}
-
-	// Overwriting-Methode
-	public class RouteRequestWatcher
-	{
-
-		private Dictionary<City, int> dict = new Dictionary<City, int>();
-		public void LogRouteRequests(object source, RouteRequestEventArgs args)
-		{
-			if (dict.ContainsKey(args.ToCity))
-			{
-				dict[args.ToCity]++;
-			}
-			else
-			{
-				dict.Add(args.ToCity, 1);
-			}
-
-			Console.WriteLine("Current Request State");
-			Console.WriteLine("----------------------");
-			foreach (var c in dict)
-			{
-				Console.WriteLine($"ToCity: {c.Key.Name} has been requested {c.Value} times");
-			}
-		}
-
-		public int GetCityRequests(City city)
-		{
-			if (dict.ContainsKey(city))
-			{
-				return dict[city];
-			}
-			return 0;
 		}
 	}
 }
