@@ -30,7 +30,7 @@ namespace RoutePlannerConsole
 
             Console.WriteLine("Nachbarstädte von Bern: " + cities.FindNeighbours(city1.Location, 9526.247927408867).Count);
 
-            Console.WriteLine(cities["Bern"].Name);
+            //Console.WriteLine(cities["Bern"].Name);
             Console.WriteLine(cities[0].Name);
         }
     }

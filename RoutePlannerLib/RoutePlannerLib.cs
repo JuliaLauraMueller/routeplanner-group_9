@@ -35,10 +35,10 @@ namespace RoutePlannerLib
 
     public class City
     {
-        public string Name;
-        public string Country;
-        public int Population;
-        public WayPoint Location;
+        public string Name { get; set; }
+        public string Country { get; set; }
+        public int Population { get; set; }
+        public WayPoint Location { get; set; }
 
         public City(string name, string country, int population, double latitude, double longitude)
         {
@@ -96,6 +96,8 @@ namespace RoutePlannerLib
             return cityList.Find(cityName);
         }
 
+        // Funktion schreiebn für die Logik für Abfragen der Cities
+
         public City this[string cityName]
         {
             get
@@ -105,19 +107,15 @@ namespace RoutePlannerLib
                     throw new ArgumentNullException();
                 }
 
-                if(cityName != null)
-                {
-                    return this.cityList.Find(ByName(cityName.ToLower())); // Klein-Gross Buchstabe toLower umwandeln
-                }
-                else
-                    throw new KeyNotFoundException("City not found!");
+                var foundCity = this.cityList.Find(ByName(cityName.ToLower()));
+                //var foundCity = FindCity(ByName);
 
-                //try {
-                //    return this.cityList.Find(ByName(cityName));
-                //}
-                //catch (InvalidCastException e) {
-                //    throw new KeyNotFoundException("City not found!", e);
-                //}
+                if (foundCity == null)
+                {
+                    throw new KeyNotFoundException("City not found!");
+                }
+
+                return foundCity;
             }
         }
 

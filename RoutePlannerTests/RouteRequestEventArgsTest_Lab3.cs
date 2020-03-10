@@ -16,9 +16,9 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
 
             var eventArgs = new RouteRequestEventArgs(fromCity, toCity, TransportMode.Car);
 
-            //Assert.AreEqual(fromCity, eventArgs.FromCity);
-            //Assert.AreEqual(toCity, eventArgs.ToCity);
-            //Assert.AreEqual(TransportMode.Car, eventArgs.Mode);
+            Assert.AreEqual(fromCity, eventArgs.FromCity);
+            Assert.AreEqual(toCity, eventArgs.ToCity);
+            Assert.AreEqual(TransportMode.Car, eventArgs.Mode);
 
         }
     }

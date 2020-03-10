@@ -71,15 +71,18 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
 	public class RouteRequestEventArgs
 	{
+        public City FromCity { get; }
+		public City ToCity { get; }
+		public TransportMode Mode { get; }
 
 		public RouteRequestEventArgs(City fromCity, City toCity, TransportMode mode)
 		{
-			this.newLink.ToCity = toCity;
-			this.newLink.FromCity = fromCity;
-			this.newLink.TransportMode = mode;
+			this.ToCity = toCity;
+			this.FromCity = fromCity;
+			this.Mode = mode;
 		}
 
-		public Link newLink { get; set; }
+		//public Link newLink { get; set; }
 	}
 
 	// Overwriting-Methode
@@ -89,14 +92,14 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		private Dictionary<City, int> dict = new Dictionary<City, int>();
 		public void LogRouteRequests(object source, RouteRequestEventArgs args)
 		{
-			if (dict.ContainsKey(args.newLink.ToCity))
+			if (dict.ContainsKey(args.ToCity))
 			{
-				int count = dict[args.newLink.ToCity];
-				dict.Add(args.newLink.ToCity, count++);
+				int count = dict[args.ToCity];
+				dict.Add(args.ToCity, count++);
 			}
 			else
 			{
-				dict.Add(args.newLink.ToCity, 1);
+				dict.Add(args.ToCity, 1);
 			}
 
 			Console.WriteLine("Current Request State");
