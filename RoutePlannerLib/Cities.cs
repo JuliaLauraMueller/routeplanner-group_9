@@ -1,55 +1,12 @@
-﻿using System;
+﻿using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 namespace RoutePlannerLib
 {
-    public class WayPoint 
-    { 
-        public string Name { get; set; } 
-        public double Longitude { get; set; } 
-        public double Latitude { get; set; } 
-        public WayPoint(string name, double latitude, double longitude)
-        { 
-            Name = name; 
-            Latitude = latitude; 
-            Longitude = longitude; 
-        }
 
-        public override string ToString()
-        {
-            return $"Waypoint: {this.Name} {this.Latitude:F2} / {this.Longitude:F2}";
-        }
-
-        public double Distance(WayPoint target)
-        {
-            double gradToRad = Math.PI / 180;
-            int radius = 6371;
-
-            double rad = radius * Math.Acos(Math.Sin(this.Latitude * gradToRad) * Math.Sin(target.Latitude * gradToRad)
-                + Math.Cos(this.Latitude * gradToRad) * Math.Cos(target.Latitude * gradToRad)
-                * Math.Cos(this.Longitude * gradToRad - target.Longitude * gradToRad));
-            return rad;
-        }
-    }
-
-    public class City
-    {
-        public string Name;
-        public string Country;
-        public int Population;
-        public WayPoint Location;
-
-        public City(string name, string country, int population, double latitude, double longitude)
-        {
-            Name = name;
-            Country = country;
-            Population = population;
-            Location = new WayPoint(name, latitude, longitude);
-
-        }
-        
-    }
 
     public class Cities
     {
@@ -84,6 +41,39 @@ namespace RoutePlannerLib
 
         }
 
+        public Predicate<City> ByName(string cityName) {
+            return delegate (City city)
+            {
+                return city.Name.Equals(cityName, StringComparison.InvariantCultureIgnoreCase); // ToLower() vellech?
+            };
+        }
+
+        public City FindCity(Predicate<City> cityName)
+        {
+            return cityList.Find(cityName);
+        }
+
+        public City this[string cityName]
+        {
+            get
+            {
+                if (cityName == null)
+                {
+                    throw new ArgumentNullException();
+                }
+
+                var foundCity = this.cityList.Find(ByName(cityName));
+                //var foundCity = FindCity(ByName);
+
+                if (foundCity == null)
+                {
+                    throw new KeyNotFoundException("City not found!");
+                }
+
+                return foundCity;
+            }
+        }
+
         public int ReadCities(string filename){
 
             int counter = 0;
@@ -96,7 +86,7 @@ namespace RoutePlannerLib
                 {
                     string[] cityPropertyArray = cityProperty.Split("\t");
                     cityList.Add(new City(cityPropertyArray[0].ToString(), cityPropertyArray[1].ToString(), int.Parse(cityPropertyArray[2]),
-                        double.Parse(cityPropertyArray[3]), double.Parse(cityPropertyArray[4])));
+                        double.Parse(cityPropertyArray[3], CultureInfo.InvariantCulture), double.Parse(cityPropertyArray[4], CultureInfo.InvariantCulture)));
 
                     counter++;
                     
