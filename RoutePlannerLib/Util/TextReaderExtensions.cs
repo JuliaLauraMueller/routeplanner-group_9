@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Fhnw.Ecnf.RoutPlanner.RoutePlannerLib.Util
 {
-    public class TextReaderExtensions
+    public static class TextReaderExtensions
     {
-        public static IEnumerable<string[]> GetSplittedLines(string splitter)
+        public static IEnumerable<string[]> GetSplittedLines(this TextReader reader, char splitter)
         {
-            return null;
+            string[] Property = reader.ToString().Split(splitter);
+            yield return Property;
+  
         } 
     }
 }

@@ -79,20 +79,16 @@ namespace RoutePlannerLib
 
             using (var reader = new StreamReader(filename))
             {
-                //IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines("\t");
-                string cityProperty;
+                IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines('\t');
 
-                while ((cityProperty = reader.ReadLine()) != null)
+                foreach(var c in citiesAsStrings)
                 {
-                    string[] cityPropertyArray = cityProperty.Split("\t");
-                    cityList.Add(new City(cityPropertyArray[0].ToString(), cityPropertyArray[1].ToString(), int.Parse(cityPropertyArray[2]),
-                        double.Parse(cityPropertyArray[3], CultureInfo.InvariantCulture), double.Parse(cityPropertyArray[4], CultureInfo.InvariantCulture)));
-
+                    cityList.Add(new City(c[0].Trim(), c[1].Trim(),
+                        int.Parse(c[2]), double.Parse(c[3],
+                        CultureInfo.InvariantCulture), double.Parse(c[4],
+                        CultureInfo.InvariantCulture)));
                     counter++;
-                    
                 }
-                // Console.WriteLine("Liste Stadtname: " + cityList[0].Name);
-                // Console.WriteLine("Liste Stadtname: " + cityList[1].Name);
             }
 
             return counter;
