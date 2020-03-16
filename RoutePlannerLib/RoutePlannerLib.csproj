@@ -5,4 +5,15 @@
     <RootNamespace>Fhnw.Ecnf.RoutPlanner.RoutePlannerLib</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="DijkstraAlgorithm.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Util\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Util\TextReaderExtensions.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
 </Project>

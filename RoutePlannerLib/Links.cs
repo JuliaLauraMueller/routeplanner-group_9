@@ -2,6 +2,8 @@ using System.IO;
 using System.Collections.Generic;
 using RoutePlannerLib;
 using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
+using System;
+using System.Linq;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 {
@@ -16,7 +18,6 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
 		public delegate void RouteRequestHandler(object sender, RouteRequestEventArgs e);
 		public event RouteRequestHandler RouteRequested;
-		
 
 		public int Count { get { return links.Count; } }
 
@@ -62,10 +63,93 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 			return Count - previousCount;
 		}
 
-		public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportMode mode)
+        //public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportMode mode)
+        //{
+        //    RouteRequested?.Invoke(this, new RouteRequestEventArgs(cities[fromCity], cities[toCity], mode));
+        //    return new List<Link>();
+        //}
+
+        public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportMode mode)
 		{
+			//TODO: inform listeners
 			RouteRequested?.Invoke(this, new RouteRequestEventArgs(cities[fromCity], cities[toCity], mode));
-			return new List<Link>();
+
+			//use dijkstra's algorithm to look for all single-source shortest paths
+			var visited = new Dictionary<City, DijkstraNode>();
+			var pending = new SortedSet<DijkstraNode>(new DijkstraNode[]
+			{
+				new DijkstraNode()
+				{
+					VisitingCity = cities[fromCity],
+					Distance = 0
+				}
+			});
+
+			while (pending.Any())
+			{
+				var cur = pending.Last();
+				pending.Remove(cur);
+
+				if (!visited.ContainsKey(cur.VisitingCity))
+				{
+					visited[cur.VisitingCity] = cur;
+
+					foreach (var link in FindAllLinksForCity(cur.VisitingCity, mode))
+						pending.Add(new DijkstraNode()
+						{
+							VisitingCity = (link.FromCity.Equals(cur.VisitingCity)) ? link.ToCity : link.FromCity,
+							Distance = cur.Distance + link.Distance,
+							PreviousCity = cur.VisitingCity
+						});
+				}
+			}
+
+			//did we find any route?
+			if (!visited.ContainsKey(cities[toCity]))
+				return null;
+
+			//create a list of cities that we passed along the way
+			var citiesEnRoute = new List<City>();
+			for (var c = cities[toCity]; c != null; c = visited[c].PreviousCity)
+				citiesEnRoute.Add(c);
+			citiesEnRoute.Reverse();
+
+			//for each city en route, find the link (path) which will be passed along the way. Return all paths as Enumerable.
+			//IEnumerable<Link> paths = FindLinksToCitiesEnRoute(citiesEnRoute);
+			//return paths.ToList();
+			return null;
+		}
+
+		//private IEnumerable<Link> FindLinksToCitiesEnRoute(List<City> citiesEnRoute)
+		//{
+		//	var findList = new List<Link>();
+		//	for (var i = 0; i < citiesEnRoute.Count; i++)
+		//	{
+		//		findList.Add(links[i].FromCity);
+		//	}
+		//}
+
+		private IEnumerable<Link> FindAllLinksForCity(City visitingCity, TransportMode mode)
+		{
+			for (var i = 0; i < links.Count; i++)
+			{
+				if (links[i].FromCity.Equals(visitingCity) || links[i].ToCity.Equals(visitingCity) && links[i].TransportMode.Equals(mode))
+
+					yield return links[i];
+			}
+
+		}
+
+		public class DijkstraNode : IComparable<DijkstraNode>
+		{
+			public City VisitingCity;
+			public double Distance;
+			public City PreviousCity;
+
+			public int CompareTo(DijkstraNode other)
+			{
+				return other.Distance.CompareTo(Distance);
+			}
 		}
 	}
 }

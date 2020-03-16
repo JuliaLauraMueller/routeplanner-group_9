@@ -1,4 +1,5 @@
 ﻿using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
+using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib.Util;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -6,8 +7,6 @@ using System.IO;
 
 namespace RoutePlannerLib
 {
-
-
     public class Cities
     {
         private List<City> cityList = new List<City>();
@@ -80,6 +79,7 @@ namespace RoutePlannerLib
 
             using (var reader = new StreamReader(filename))
             {
+                //IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines("\t");
                 string cityProperty;
 
                 while ((cityProperty = reader.ReadLine()) != null)
@@ -98,8 +98,6 @@ namespace RoutePlannerLib
             return counter;
         }
 
-        
-
         public IList<City> FindNeighbours(WayPoint location, double distance)
         {
            List<City> nearByCities = new List<City>();
@@ -114,7 +112,6 @@ namespace RoutePlannerLib
             }
             return nearByCities;
         }
-
 
         public int AddCity(City city)
         {

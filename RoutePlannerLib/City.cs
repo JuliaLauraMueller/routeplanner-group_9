@@ -20,5 +20,28 @@ namespace Fhnw.Ecnf.RoutPlanner.RoutePlannerLib
 
         }
 
+        public override bool Equals(object city)
+        {
+            if (city == null)
+            {
+                return false;
+            }
+            City c = (City) city;
+
+            if (this.Name.ToLower().Equals(c.Name.ToLower()) && this.Country.ToLower().Equals(c.Country.ToLower()))
+            {
+                return true;
+            }
+            return false;
+            
+        }
+
+        public override int GetHashCode()
+        {
+            Console.WriteLine(this.Name.GetHashCode() ^ this.Country.GetHashCode());
+            return this.Name.GetHashCode() ^ this.Country.GetHashCode();
+            
+        }
+
     }
 }

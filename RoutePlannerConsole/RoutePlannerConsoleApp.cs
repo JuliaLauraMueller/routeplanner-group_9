@@ -20,6 +20,9 @@ namespace RoutePlannerConsole
             // Cities
             var cities = new Cities();
             var city1 = new City("Bern", "Schweiz", 12345, 46.947998, 7.448148);
+            var city2 = new City("Bern", "Schweiz", 12345, 48.947998, 9.448148);
+            Console.WriteLine("GetHashCode: " + city1.GetHashCode());
+            Console.WriteLine("GetHashCode: " + city2.GetHashCode());
 
             Console.WriteLine(wayPoint.ToString());
             Console.WriteLine(wayPoint2.ToString());
