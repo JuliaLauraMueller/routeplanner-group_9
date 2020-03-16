@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
-
+using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
 {
@@ -38,6 +38,6 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
         {
             Assert.IsTrue(TestHelpers.CheckForMethodCallInMethod("../../../../RoutePlannerLib/City.cs", "GetHashCode", "Name"));
             Assert.IsTrue(TestHelpers.CheckForMethodCallInMethod("../../../../RoutePlannerLib/City.cs", "GetHashCode", "Country"));
-        }	 
+        }
     }
 }

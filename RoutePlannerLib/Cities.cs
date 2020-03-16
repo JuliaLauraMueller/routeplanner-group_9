@@ -14,7 +14,6 @@ namespace RoutePlannerLib
 
         public City this[int index] // indexer implementation
         {
-            
             get {
                 if (index > cityList.Count)
                 {
@@ -37,7 +36,6 @@ namespace RoutePlannerLib
                 }
                 cityList[index] = value;
             }
-
         }
 
         public Predicate<City> ByName(string cityName) {
@@ -73,26 +71,49 @@ namespace RoutePlannerLib
             }
         }
 
-        public int ReadCities(string filename){
-
+        public int ReadCities(string filename)
+        {
             int counter = 0;
 
             using (var reader = new StreamReader(filename))
             {
-                IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines('\t');
+                //IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines("\t");
+                string cityProperty;
 
-                foreach(var c in citiesAsStrings)
+                while ((cityProperty = reader.ReadLine()) != null)
                 {
-                    cityList.Add(new City(c[0].Trim(), c[1].Trim(),
-                        int.Parse(c[2]), double.Parse(c[3],
-                        CultureInfo.InvariantCulture), double.Parse(c[4],
-                        CultureInfo.InvariantCulture)));
+                    string[] cityPropertyArray = cityProperty.Split("\t");
+                    cityList.Add(new City(cityPropertyArray[0].ToString(), cityPropertyArray[1].ToString(), int.Parse(cityPropertyArray[2]),
+                        double.Parse(cityPropertyArray[3], CultureInfo.InvariantCulture), double.Parse(cityPropertyArray[4], CultureInfo.InvariantCulture)));
+
                     counter++;
+
                 }
             }
-
             return counter;
         }
+
+
+        //public int ReadCities(string filename)
+        //{
+
+        //    int counter = 0;
+
+        //    using (var reader = new StreamReader(filename))
+        //    {
+        //        IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines('\t');
+
+        //        foreach (var c in citiesAsStrings)
+        //        {
+        //            cityList.Add(new City(c[0].Trim(), c[1].Trim(),
+        //                int.Parse(c[2]), double.Parse(c[3],
+        //                CultureInfo.InvariantCulture), double.Parse(c[4],
+        //                CultureInfo.InvariantCulture)));
+        //            counter++;
+        //        }
+        //    }
+        //    return counter;
+        //}
 
         public IList<City> FindNeighbours(WayPoint location, double distance)
         {

@@ -115,21 +115,21 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 			citiesEnRoute.Reverse();
 
 			//for each city en route, find the link (path) which will be passed along the way. Return all paths as Enumerable.
-			//IEnumerable<Link> paths = FindLinksToCitiesEnRoute(citiesEnRoute);
-			//return paths.ToList();
-			return null;
+			IEnumerable<Link> paths = FindLinksToCitiesEnRoute(citiesEnRoute);
+			return paths.ToList();
 		}
 
-		//private IEnumerable<Link> FindLinksToCitiesEnRoute(List<City> citiesEnRoute)
-		//{
-		//	var findList = new List<Link>();
-		//	for (var i = 0; i < citiesEnRoute.Count; i++)
-		//	{
-		//		findList.Add(links[i].FromCity);
-		//	}
-		//}
+        private IEnumerable<Link> FindLinksToCitiesEnRoute(List<City> citiesEnRoute)
+        {
+            //var findList = new List<Link>();
+            //for (var i = 0; i < citiesEnRoute.Count; i++)
+            //{
+            //    findList.Add(links[i].FromCity);
+            //}
+			return null;
+        }
 
-		private IEnumerable<Link> FindAllLinksForCity(City visitingCity, TransportMode mode)
+        private IEnumerable<Link> FindAllLinksForCity(City visitingCity, TransportMode mode)
 		{
 			for (var i = 0; i < links.Count; i++)
 			{
@@ -137,7 +137,6 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
 					yield return links[i];
 			}
-
 		}
 
 		public class DijkstraNode : IComparable<DijkstraNode>

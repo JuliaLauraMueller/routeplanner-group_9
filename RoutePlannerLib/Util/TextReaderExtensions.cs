@@ -10,7 +10,7 @@ namespace Fhnw.Ecnf.RoutPlanner.RoutePlannerLib.Util
         {
             string[] Property = reader.ToString().Split(splitter);
             yield return Property;
-  
         } 
+        
     }
 }

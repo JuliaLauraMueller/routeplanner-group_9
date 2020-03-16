@@ -40,8 +40,6 @@ namespace Fhnw.Ecnf.RoutPlanner.RoutePlannerLib
         {
             Console.WriteLine(this.Name.GetHashCode() ^ this.Country.GetHashCode());
             return this.Name.GetHashCode() ^ this.Country.GetHashCode();
-            
         }
-
     }
 }

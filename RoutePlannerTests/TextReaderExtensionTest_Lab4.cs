@@ -5,8 +5,8 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
-using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util;
-
+// using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util;
+using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib.Util;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
 {
@@ -18,7 +18,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
         private const string CitiesTestFile = "citiesTestDataLab4.txt";
         private const string LinksTestFile = "linksTestDataLab4.txt";
 
- 
+
         [TestMethod]
         public void TestGetSplittedLinesWithCities()
         {
