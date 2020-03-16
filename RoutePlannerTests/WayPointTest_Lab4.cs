@@ -5,11 +5,12 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
+using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
 {
-    
-     public partial class WayPointTest
+
+    public partial class WayPointTest
     {
 
         [TestMethod]

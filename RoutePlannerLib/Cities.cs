@@ -14,7 +14,6 @@ namespace RoutePlannerLib
 
         public City this[int index] // indexer implementation
         {
-            
             get {
                 if (index > cityList.Count)
                 {
@@ -37,7 +36,6 @@ namespace RoutePlannerLib
                 }
                 cityList[index] = value;
             }
-
         }
 
         public Predicate<City> ByName(string cityName) {
@@ -73,7 +71,8 @@ namespace RoutePlannerLib
             }
         }
 
-        public int ReadCities(string filename){
+        public int ReadCities(string filename)
+        {
 
             int counter = 0;
 
@@ -89,14 +88,33 @@ namespace RoutePlannerLib
                         double.Parse(cityPropertyArray[3], CultureInfo.InvariantCulture), double.Parse(cityPropertyArray[4], CultureInfo.InvariantCulture)));
 
                     counter++;
-                    
+
                 }
-                // Console.WriteLine("Liste Stadtname: " + cityList[0].Name);
-                // Console.WriteLine("Liste Stadtname: " + cityList[1].Name);
             }
 
             return counter;
         }
+
+        //public int ReadCities(string filename)
+        //{
+
+        //    int counter = 0;
+
+        //    using (var reader = new StreamReader(filename))
+        //    {
+        //        IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines('\t');
+
+        //        foreach (var c in citiesAsStrings)
+        //        {
+        //            cityList.Add(new City(c[0].Trim(), c[1].Trim(),
+        //                int.Parse(c[2]), double.Parse(c[3],
+        //                CultureInfo.InvariantCulture), double.Parse(c[4],
+        //                CultureInfo.InvariantCulture)));
+        //            counter++;
+        //        }
+        //    }
+        //    return counter;
+        //}
 
         public IList<City> FindNeighbours(WayPoint location, double distance)
         {
