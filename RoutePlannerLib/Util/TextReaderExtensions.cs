@@ -8,8 +8,16 @@ namespace Fhnw.Ecnf.RoutPlanner.RoutePlannerLib.Util
     {
         public static IEnumerable<string[]> GetSplittedLines(this TextReader reader, char splitter)
         {
-            string[] Property = reader.ToString().Split(splitter);
-            yield return Property;
+            string propertyLine;
+
+            while ((propertyLine = reader.ReadLine()) != null)
+            {
+                string[] Property = propertyLine.ToString().Split(splitter);
+                Console.WriteLine(Property[0]);
+
+                yield return Property;
+
+            }
         } 
         
     }
