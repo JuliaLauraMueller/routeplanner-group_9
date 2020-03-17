@@ -27,8 +27,6 @@ namespace Fhnw.Ecnf.RoutPlanner.RoutePlannerLib
                 return false;
             }
 
-            //City test = new City();
-            //if(test.GetType.Equals(city))
             if (city is City c)
             {
                 if (this.Name.ToLower().Equals(c.Name.ToLower()) && this.Country.ToLower().Equals(c.Country.ToLower()))
