@@ -26,11 +26,15 @@ namespace Fhnw.Ecnf.RoutPlanner.RoutePlannerLib
             {
                 return false;
             }
-            City c = (City) city;
 
-            if (this.Name.ToLower().Equals(c.Name.ToLower()) && this.Country.ToLower().Equals(c.Country.ToLower()))
+            //City test = new City();
+            //if(test.GetType.Equals(city))
+            if (city is City c)
             {
-                return true;
+                if (this.Name.ToLower().Equals(c.Name.ToLower()) && this.Country.ToLower().Equals(c.Country.ToLower()))
+                {
+                    return true;
+                }
             }
             return false;
             

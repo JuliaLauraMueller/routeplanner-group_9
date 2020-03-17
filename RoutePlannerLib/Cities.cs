@@ -71,28 +71,6 @@ namespace RoutePlannerLib
             }
         }
 
-        /*public int ReadCities(string filename)
-        {
-            int counter = 0;
-
-            using (var reader = new StreamReader(filename))
-            {
-                //IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines("\t");
-                string cityProperty;
-
-                while ((cityProperty = reader.ReadLine()) != null)
-                {
-                    string[] cityPropertyArray = cityProperty.Split("\t");
-                    cityList.Add(new City(cityPropertyArray[0].ToString(), cityPropertyArray[1].ToString(), int.Parse(cityPropertyArray[2]),
-                        double.Parse(cityPropertyArray[3], CultureInfo.InvariantCulture), double.Parse(cityPropertyArray[4], CultureInfo.InvariantCulture)));
-
-                    counter++;
-
-                }
-            }
-            return counter;
-        }*/
-
 
         public int ReadCities(string filename)
         {
