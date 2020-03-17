@@ -74,7 +74,6 @@ namespace RoutePlannerLib
 
         public int ReadCities(string filename)
         {
-            Console.WriteLine("Hallo Velo!");
             int counter = 0;
 
             using (var reader = new StreamReader(filename))

@@ -4,6 +4,7 @@ using RoutePlannerLib;
 using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
 using System;
 using System.Linq;
+using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib.Util;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 {
@@ -41,15 +42,14 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 			var previousCount = Count;
 			using (var reader = new StreamReader(filename))
 			{
-				string line;
-				while ((line = reader.ReadLine()) != null)
-				{
-					var tokens = line.Split('\t');
+				IEnumerable<string[]> linksAsStrings = reader.GetSplittedLines('\t');
 
+				foreach (var l in linksAsStrings)
+				{
 					try
 					{
-						var city1 = cities[tokens[0]];
-						var city2 = cities[tokens[1]];
+						var city1 = cities[l[0]];
+						var city2 = cities[l[1]];
 
 						links.Add(new Link(city1, city2, city1.Location.Distance(city2.Location), TransportMode.Rail));
 					}
@@ -121,19 +121,33 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
         private IEnumerable<Link> FindLinksToCitiesEnRoute(List<City> citiesEnRoute)
         {
-            //var findList = new List<Link>();
-            //for (var i = 0; i < citiesEnRoute.Count; i++)
-            //{
-            //    findList.Add(links[i].FromCity);
-            //}
-			return null;
+            var findList = new List<Link>();
+			//foreach (var obj in citiesEnRoute)
+			//{
+			//	findList.Add(obj);
+			//}
+			bool found;
+			for (var i = 0; i < citiesEnRoute.Count; i++)
+			{
+
+				found = false;
+				for (var j = 0; found; j++)
+				{
+					if (links[j].FromCity.Equals(citiesEnRoute[i]) && links[j].ToCity.Equals(citiesEnRoute[i + 1]))
+					{
+						findList.Add(links[j]);
+						found = true;
+					}
+				}
+			}
+			return findList;
         }
 
-        private IEnumerable<Link> FindAllLinksForCity(City visitingCity, TransportMode mode)
+		private IEnumerable<Link> FindAllLinksForCity(City visitingCity, TransportMode mode)
 		{
 			for (var i = 0; i < links.Count; i++)
 			{
-				if (links[i].FromCity.Equals(visitingCity) || links[i].ToCity.Equals(visitingCity) && links[i].TransportMode.Equals(mode))
+				if ((links[i].FromCity.Equals(visitingCity) || links[i].ToCity.Equals(visitingCity)) && links[i].TransportMode.Equals(mode))
 
 					yield return links[i];
 			}
