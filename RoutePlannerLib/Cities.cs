@@ -76,19 +76,33 @@ namespace RoutePlannerLib
         public int ReadCities(string filename)
         {
             int counter = 0;
-
             using (var reader = new StreamReader(filename))
             {
                 IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines('\t');
 
-                foreach (var c in citiesAsStrings)
+                //var c = citiesAsStrings.Select(i => i.)
+                //var list = cityList.AddRange(citiesAsStrings.Select(i => i.);
+                var list = citiesAsStrings.Select(city => new
                 {
-                    cityList.Add(new City(c[0].Trim(), c[1].Trim(),
-                        int.Parse(c[2]), double.Parse(c[3],
-                        CultureInfo.InvariantCulture), double.Parse(c[4],
-                        CultureInfo.InvariantCulture)));
-                    counter++;
-                }
+                    Name = city[0].Trim(),
+                    Country = city[1].Trim(),
+                    Population = int.Parse(city[2]),                    
+                    Location = new WayPoint(city[0].Trim(), double.Parse(city[3], CultureInfo.InvariantCulture), double.Parse(city[4], CultureInfo.InvariantCulture))
+
+                }).ToArray();
+
+                counter = list.Count();
+                
+
+                //foreach (var c in citiesAsStrings)
+                //{
+                //    cityList.Add(new City(c[0].Trim(), c[1].Trim(),
+                //        int.Parse(c[2]), double.Parse(c[3],
+                //        CultureInfo.InvariantCulture), double.Parse(c[4],
+                //        CultureInfo.InvariantCulture)));
+                //    counter++;
+                //}
+
             }
            return counter;
         }
