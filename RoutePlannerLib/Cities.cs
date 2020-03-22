@@ -80,19 +80,13 @@ namespace RoutePlannerLib
             {
                 IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines('\t');
 
-                //var c = citiesAsStrings.Select(i => i.)
-                //var list = cityList.AddRange(citiesAsStrings.Select(i => i.);
-                var list = citiesAsStrings.Select(city => new
-                {
-                    Name = city[0].Trim(),
-                    Country = city[1].Trim(),
-                    Population = int.Parse(city[2]),                    
-                    Location = new WayPoint(city[0].Trim(), double.Parse(city[3], CultureInfo.InvariantCulture), double.Parse(city[4], CultureInfo.InvariantCulture))
+                var list = citiesAsStrings.Select(city => new City(city[0].Trim(), city[1].Trim(),
+                        int.Parse(city[2]), double.Parse(city[3],
+                        CultureInfo.InvariantCulture), double.Parse(city[4],
+                        CultureInfo.InvariantCulture))).ToArray();
 
-                }).ToArray();
-
+                cityList.AddRange(list);
                 counter = list.Count();
-                
 
                 //foreach (var c in citiesAsStrings)
                 //{
@@ -102,7 +96,6 @@ namespace RoutePlannerLib
                 //        CultureInfo.InvariantCulture)));
                 //    counter++;
                 //}
-
             }
            return counter;
         }
