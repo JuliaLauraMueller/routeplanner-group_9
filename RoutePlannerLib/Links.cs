@@ -65,11 +65,12 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
         public City[] FindCities(TransportMode transportMode)
         {
-			return links.Where(c => c.TransportMode == transportMode).Select(l => new City
+			// return links.Where(c => c.TransportMode == transportMode).Select(l => l.ToCity).Union(links.Select(from => from.FromCity)).Distinct().ToArray();
+			 return links.Where(c => c.TransportMode == transportMode).Select(l => new City
 			(l.ToCity.Name, l.ToCity.Country, l.ToCity.Population, l.ToCity.Location.Latitude, l.ToCity.Location.Longitude)).Distinct().ToArray();
-        }
+		}
 
-        public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportMode mode)
+		public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportMode mode)
 		{
 			//TODO: inform listeners
 			RouteRequested?.Invoke(this, new RouteRequestEventArgs(cities[fromCity], cities[toCity], mode));
