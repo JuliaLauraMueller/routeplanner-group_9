@@ -55,5 +55,24 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
             }
         }
 
+        /// <summary>
+        /// Simple test if a method is a single liner making a LINQ call (opcode 40)
+        /// </summary>
+        /// <param name="methodInfo">the method to check</param>
+        public static bool CheckForSingleLineLinqUsage(MethodInfo methodInfo)
+        {
+            // some more not very sophisticated tests to ensure LINQ has been used
+            MethodBody mb = methodInfo.GetMethodBody();
+
+            bool localVarCountLow = mb.LocalVariables.Count <=2;
+
+            // the method should be smaller than 100 IL byte instructions
+            bool iLCodeLinesLow = mb.GetILAsByteArray().Length < 100;
+
+            bool linqCallIncluded = mb.GetILAsByteArray().ToList().Contains(40);
+
+            return localVarCountLow && iLCodeLinesLow && linqCallIncluded;
+        }
+
     }
 }

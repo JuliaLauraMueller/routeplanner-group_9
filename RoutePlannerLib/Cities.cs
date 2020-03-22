@@ -102,8 +102,7 @@ namespace RoutePlannerLib
 
         public IEnumerable<City> FindNeighbours(WayPoint location, double distance)
         {
-           var nearByCities = cityList.Where(i => location.Distance(i.Location) < distance);
-           return nearByCities;
+           return cityList.Where(i => location.Distance(i.Location) < distance);
         }
 
         public int AddCity(City city)
