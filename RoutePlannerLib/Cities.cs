@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 
 namespace RoutePlannerLib
 {
@@ -92,19 +93,10 @@ namespace RoutePlannerLib
            return counter;
         }
 
-        public IList<City> FindNeighbours(WayPoint location, double distance)
+        public IEnumerable<City> FindNeighbours(WayPoint location, double distance)
         {
-           List<City> nearByCities = new List<City>();
-
-            for (int i = 0; i < cityList.Count; i++)
-            {
-                if (location.Distance(cityList[i].Location) < distance)
-                {
-                    nearByCities.Add(cityList[i]);
-                    
-                }
-            }
-            return nearByCities;
+           var nearByCities = cityList.Where(i => location.Distance(i.Location) < distance);
+           return nearByCities;
         }
 
         public int AddCity(City city)
