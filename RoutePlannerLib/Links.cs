@@ -63,11 +63,13 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 			return Count - previousCount;
 		}
 
-        //public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportMode mode)
-        //{
-        //    RouteRequested?.Invoke(this, new RouteRequestEventArgs(cities[fromCity], cities[toCity], mode));
-        //    return new List<Link>();
-        //}
+        public City[] FindCities(TransportMode transportMode)
+        {
+			var foundCity = links.Where(c => c.TransportMode == transportMode).Select(l => new City
+			(l.ToCity.Name, l.ToCity.Country, l.ToCity.Population, l.ToCity.Location.Latitude, l.ToCity.Location.Longitude)).Distinct().ToArray();
+
+			return foundCity;
+        }
 
         public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportMode mode)
 		{
