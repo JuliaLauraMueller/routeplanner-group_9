@@ -59,20 +59,22 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 					}
 				}
 			}
-
 			return Count - previousCount;
 		}
 
         public City[] FindCities(TransportMode transportMode)
         {
-			// return links.Where(c => c.TransportMode == transportMode).Select(l => l.ToCity).Union(links.Select(from => from.FromCity)).Distinct().ToArray();
-			 return links.Where(c => c.TransportMode == transportMode).Select(l => new City
-			(l.ToCity.Name, l.ToCity.Country, l.ToCity.Population, l.ToCity.Location.Latitude, l.ToCity.Location.Longitude)).Distinct().ToArray();
+			return links.Where(c => c.TransportMode == transportMode).SelectMany(cities => new[]
+			{
+				cities.FromCity,
+				cities.ToCity
+			})
+                .Distinct()
+                .ToArray();
 		}
 
 		public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportMode mode)
 		{
-			//TODO: inform listeners
 			RouteRequested?.Invoke(this, new RouteRequestEventArgs(cities[fromCity], cities[toCity], mode));
 
 			//use dijkstra's algorithm to look for all single-source shortest paths
@@ -123,14 +125,9 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         private IEnumerable<Link> FindLinksToCitiesEnRoute(List<City> citiesEnRoute)
         {
             var findList = new List<Link>();
-			//foreach (var obj in citiesEnRoute)
-			//{
-			//	findList.Add(obj);
-			//}
 			bool found;
 			for (var i = 0; i < citiesEnRoute.Count; i++)
 			{
-
 				found = false;
 				for (var j = 0; found; j++)
 				{
@@ -148,7 +145,8 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		{
 			for (var i = 0; i < links.Count; i++)
 			{
-				if ((links[i].FromCity.Equals(visitingCity) || links[i].ToCity.Equals(visitingCity)) && links[i].TransportMode.Equals(mode))
+				if ((links[i].FromCity.Equals(visitingCity) || links[i].ToCity.Equals(visitingCity))
+                    && links[i].TransportMode.Equals(mode))
 
 					yield return links[i];
 			}
