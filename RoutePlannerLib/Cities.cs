@@ -1,5 +1,6 @@
 ﻿using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util;
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -24,6 +25,7 @@ namespace RoutePlannerLib
                 {
                     throw new ArgumentOutOfRangeException("Index darf nicht negativ sein");
                 }
+
                 return this.cityList[index];
             }
             set {
@@ -35,6 +37,7 @@ namespace RoutePlannerLib
                 {
                     throw new ArgumentOutOfRangeException("Index darf nicht negativ sein");
                 }
+
                 cityList[index] = value;
             }
         }
@@ -61,7 +64,6 @@ namespace RoutePlannerLib
                 }
 
                 var foundCity = this.cityList.Find(ByName(cityName));
-                //var foundCity = FindCity(ByName);
 
                 if (foundCity == null)
                 {
@@ -87,15 +89,6 @@ namespace RoutePlannerLib
 
                 cityList.AddRange(list);
                 counter = list.Count();
-
-                //foreach (var c in citiesAsStrings)
-                //{
-                //    cityList.Add(new City(c[0].Trim(), c[1].Trim(),
-                //        int.Parse(c[2]), double.Parse(c[3],
-                //        CultureInfo.InvariantCulture), double.Parse(c[4],
-                //        CultureInfo.InvariantCulture)));
-                //    counter++;
-                //}
             }
            return counter;
         }

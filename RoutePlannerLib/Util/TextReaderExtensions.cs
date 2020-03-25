@@ -13,8 +13,6 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util
             while ((propertyLine = reader.ReadLine()) != null)
             {
                 string[] Property = propertyLine.ToString().Split(splitter);
-                Console.WriteLine(Property[0]);
-
                 yield return Property;
 
             }

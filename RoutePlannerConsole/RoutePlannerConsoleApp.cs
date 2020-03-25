@@ -27,15 +27,23 @@ namespace RoutePlannerConsole
             Console.WriteLine(wayPoint.ToString());
             Console.WriteLine(wayPoint2.ToString());
             Console.WriteLine("------------------------------------------");
+
             Console.WriteLine($"Der Abstand zwischen {bern.Name} und {tripolis.Name} ist {tripolis.Distance(bern):F2} km");
             Console.WriteLine("Anzahl der Cities in der Liste: " + cities.ReadCities("./citiesTestDataLab2.txt"));
             Console.WriteLine("Neue City hinzugefügt, Anzahl: " + cities.AddCity(city1));
             Console.WriteLine("Neue City hinzugefügt, Anzahl: " + cities.AddCity(city1));
+            Console.WriteLine("------------------------------------------");
 
-            //Console.WriteLine("Nachbarstädte von Bern: " + cities.FindNeighbours(city1.Location, 9526.247927408867).Count);
+            Console.WriteLine("Nachbarstädte von Bern: " );
+            foreach(var neighbour in cities.FindNeighbours(city1.Location, 9526.247927408867))
+            {
+                Console.WriteLine(neighbour.Name);
+            }
+            Console.WriteLine("------------------------------------------");
 
-            //Console.WriteLine(cities["Bern"].Name);
+            Console.WriteLine(cities["Bern"].Name);
             Console.WriteLine(cities[0].Name);
+            Console.WriteLine("------------------------------------------");
         }
     }
 }

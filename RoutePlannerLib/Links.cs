@@ -1,8 +1,9 @@
+using System;
 using System.IO;
 using System.Collections.Generic;
-using RoutePlannerLib;
-using System;
 using System.Linq;
+
+using RoutePlannerLib;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
@@ -106,11 +107,11 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 				}
 			}
 
-			//did we find any route?
+			//check if any routes where found
 			if (!visited.ContainsKey(cities[toCity]))
 				return null;
 
-			//create a list of cities that we passed along the way
+			//list of cities that we passed along the way
 			var citiesEnRoute = new List<City>();
 			for (var c = cities[toCity]; c != null; c = visited[c].PreviousCity)
 				citiesEnRoute.Add(c);
