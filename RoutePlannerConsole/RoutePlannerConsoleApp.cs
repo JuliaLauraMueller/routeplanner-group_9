@@ -1,5 +1,5 @@
 ﻿using System;
-using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
+using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
 using RoutePlannerLib;
 
 namespace RoutePlannerConsole

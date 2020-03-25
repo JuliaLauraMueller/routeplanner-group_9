@@ -4,7 +4,6 @@ using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
 using System.Collections.Generic;
 using System.IO;
 using RoutePlannerLib;
-using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
 {

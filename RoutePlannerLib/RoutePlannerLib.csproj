@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Fhnw.Ecnf.RoutPlanner.RoutePlannerLib</RootNamespace>
+    <RootNamespace>Fhnw.Ecnf.RoutePlanner.RoutePlannerLib</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

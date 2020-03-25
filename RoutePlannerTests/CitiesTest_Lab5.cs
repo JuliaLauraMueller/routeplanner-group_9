@@ -8,7 +8,6 @@ using System.Reflection.Emit;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
 using RoutePlannerLib;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest

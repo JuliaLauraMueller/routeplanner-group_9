@@ -1,6 +1,5 @@
-﻿using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
-
-namespace Fhnw.Ecnf.RoutPlanner.RoutePlannerLib
+﻿
+namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 {
 	public class RouteRequestEventArgs
 	{

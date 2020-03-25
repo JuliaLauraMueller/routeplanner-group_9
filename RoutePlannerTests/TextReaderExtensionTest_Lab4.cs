@@ -5,8 +5,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
-// using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util;
-using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib.Util;
+using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
 {
@@ -52,9 +51,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
         {
             Type type = typeof(TextReaderExtensions);
             Console.WriteLine(type.FullName);
-            // TODO: Wieso kommt Rout raus und nicht Route?
-            //Assert.IsTrue(type.FullName.Equals("Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util.TextReaderExtensions"));
-            Assert.IsTrue(type.FullName.Equals("Fhnw.Ecnf.RoutPlanner.RoutePlannerLib.Util.TextReaderExtensions"));
+            Assert.IsTrue(type.FullName.Equals("Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util.TextReaderExtensions"));
         }
     }
 }

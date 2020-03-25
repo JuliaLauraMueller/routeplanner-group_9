@@ -1,10 +1,9 @@
 using System.IO;
 using System.Collections.Generic;
 using RoutePlannerLib;
-using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
 using System;
 using System.Linq;
-using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib.Util;
+using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Fhnw.Ecnf.RoutPlanner.RoutePlannerLib.Util
+namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util
 {
     public static class TextReaderExtensions
     {

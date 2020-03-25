@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using RoutePlannerLib;
-using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
 {

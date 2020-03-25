@@ -6,7 +6,7 @@ using System.IO;
 using System.Reflection;
 using System;
 using RoutePlannerLib;
-using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
+using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
 {
