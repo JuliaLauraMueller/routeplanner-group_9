@@ -1,5 +1,7 @@
-﻿using System;
+﻿using RoutePlannerLib;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 {
@@ -8,6 +10,8 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 	{
 
 		private Dictionary<City, int> dict = new Dictionary<City, int>();
+		public virtual DateTime GetCurrentDate { get { return DateTime.Now; } }
+		private readonly List<Tuple<City, DateTime>> cityRequestsDate = new List<Tuple<City, DateTime>>();
 		public void LogRouteRequests(object source, RouteRequestEventArgs args)
 		{
 			if (dict.ContainsKey(args.ToCity))
@@ -31,9 +35,43 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		{
 			if (dict.ContainsKey(city))
 			{
+				Tuple<City, DateTime> tuple = new Tuple<City, DateTime>(city, GetCurrentDate);
+				cityRequestsDate.Add(tuple);
+
 				return dict[city];
 			}
 			return 0;
+		}
+
+		// Was waren die drei bevölkerungsreichsten Städte, die an einem bestimmten Tag abgefragt wurden?
+		public IEnumerable<City> GetThreeBiggestCityOnDay(DateTime day)
+		{
+			return cityRequestsDate.Where(r => r.Item2.Equals(day.Date)).OrderByDescending(c => c.Item1.Population).SelectMany(t => new[]
+			{
+				t.Item1
+			}).Distinct().Take(3);
+		}
+
+		//Geben Sie die drei Städte mit den längsten Städtenamen zurück, die im gegebenen Zeitraum(inklusive from und to) abgefragt wurden.
+		public IEnumerable<City> GetThreeLongestCityNamesWithinPeriod(DateTime from, DateTime to)
+		{
+			return cityRequestsDate.Where(r => r.Item2 > from.Date && r.Item2 < to.Date).OrderByDescending(c => c.Item1.Name.Length).SelectMany(t => new[]
+			{
+				t.Item1
+			}).Distinct().Take(3);
+		}
+
+		//Welche Städte wurden in den letzten zwei Wochen nie als Ziel angefragt?
+		public IEnumerable<City> GetNotRequestedCities(Cities cities)
+		{
+			return cities.CityListEnumerator.Where(c => !(cityRequestsDate
+				.Where(r => r.Item2 < GetCurrentDate.AddDays(14))
+				.SelectMany(t => new[]
+				{
+					t.Item1
+				})
+				.Contains(c)))
+			.Distinct();
 		}
 	}
 }
