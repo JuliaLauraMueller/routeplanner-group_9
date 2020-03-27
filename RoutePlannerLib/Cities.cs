@@ -12,6 +12,18 @@ namespace RoutePlannerLib
     public class Cities
     {
         private List<City> cityList = new List<City>();
+
+        public IEnumerable<City> CityListEnumerator
+        {
+            get { return cityList; }
+        }
+
+        //public ReadOnlyCollection<City> ReadOnly
+        //{
+        //    get { return cityList.AsReadOnly(); }
+        //}
+
+
         public int Count { get { return this.cityList.Count; } }
 
         public City this[int index] // indexer implementation
@@ -102,6 +114,12 @@ namespace RoutePlannerLib
         {
             cityList.Add(city);
             return cityList.Count;
+        }
+
+        // Wie gross ist die Bevölkerungszahl der drei Städte mit den kürzesten Städtenamen?
+        public int GetPopulationOfShortestCityNames()
+        {
+            return CityListEnumerator.OrderBy(c => c.Name.Length).Take(3).Sum(p => p.Population);
         }
     }
 

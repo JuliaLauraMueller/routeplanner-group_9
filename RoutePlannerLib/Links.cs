@@ -167,6 +167,18 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 			}
 		}
 
+		//Bei wie vielen Links treten die drei bevölkerungsreichsten Städte aller Cities in den Links als Start-Stadt auf?
+		public int GetCountOfThreeBiggestCitiesInLinks()
+		{
+			return links.Where(l => cities.CityListEnumerator.OrderByDescending(c => c.Population).Take(3).Contains(l.FromCity)).Count();
+		}
+
+		public int GetCountOfThreeCitiesWithLongestNameInLinks()
+		{
+			return links.Where(l => cities.CityListEnumerator.OrderByDescending(c => c.Name.Length).Take(3).Contains(l.FromCity)
+						|| cities.CityListEnumerator.OrderByDescending(c => c.Name.Length).Take(3).Contains(l.ToCity)).Count();
+		}
+
 		public class DijkstraNode : IComparable<DijkstraNode>
 		{
 			public City VisitingCity;
