@@ -125,21 +125,20 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
         private IEnumerable<Link> FindLinksToCitiesEnRoute(List<City> citiesEnRoute)
         {
             var findList = new List<Link>();
-			bool found;
-			for (var i = 0; i < citiesEnRoute.Count; i++)
+			for (var i = 0; i < citiesEnRoute.Count - 1; i++)
 			{
-				found = false;
-				for (var j = 0; found; j++)
+				for (var j = 0; j < links.Count ; j++)
 				{
-					if (links[j].FromCity.Equals(citiesEnRoute[i]) && links[j].ToCity.Equals(citiesEnRoute[i + 1]))
+					if (links[j].FromCity.Equals(citiesEnRoute[i]) && links[j].ToCity.Equals(citiesEnRoute[i + 1]) 
+						|| links[j].ToCity.Equals(citiesEnRoute[i]) && links[j].FromCity.Equals(citiesEnRoute[i + 1]))
 					{
 						findList.Add(links[j]);
-						found = true;
 					}
 				}
 			}
 			return findList;
         }
+
 
 		private IEnumerable<Link> FindAllLinksForCity(City visitingCity, TransportMode mode)
 		{
