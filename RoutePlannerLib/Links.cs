@@ -139,6 +139,22 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 			return findList;
         }
 
+		//Variante mit yield
+		//
+		//private IEnumerable<Link> FindLinksToCitiesEnRoute(List<City> citiesEnRoute)
+		//{
+		//	for (int i = 0; i < citiesEnRoute.Count - 1; i++)
+		//	{
+		//		foreach (var link in links)
+		//		{
+		//			if (link.FromCity.Equals(citiesEnRoute[i]) && link.ToCity.Equals(citiesEnRoute[i + 1])
+		//				|| link.ToCity.Equals(citiesEnRoute[i]) && link.FromCity.Equals(citiesEnRoute[i + 1]))
+		//			{
+		//				yield return link;
+		//			}
+		//		}
+		//	}
+		//}
 
 		private IEnumerable<Link> FindAllLinksForCity(City visitingCity, TransportMode mode)
 		{
