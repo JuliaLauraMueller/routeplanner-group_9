@@ -19,7 +19,6 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
 			if (dict.ContainsKey(args.ToCity))
 			{
-
 				tuple = new Tuple<City, DateTime>(args.ToCity, GetCurrentDate);
 				cityRequestsDate.Add(tuple);
 
