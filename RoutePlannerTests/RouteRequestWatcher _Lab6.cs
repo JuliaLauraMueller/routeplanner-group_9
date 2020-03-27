@@ -132,6 +132,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
             links4.FindShortestRouteBetween("Basel", "Bern", TransportMode.Rail);
 
             testDate = DateTime.Now;
+            Console.WriteLine("DateTime.Now: " + testDate);
 
             links4.FindShortestRouteBetween("Bern", "Lyon", TransportMode.Rail);
             links4.FindShortestRouteBetween("Bern", "Dornbirn", TransportMode.Rail);

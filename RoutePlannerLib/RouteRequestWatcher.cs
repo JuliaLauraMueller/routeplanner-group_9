@@ -14,8 +14,15 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		private readonly List<Tuple<City, DateTime>> cityRequestsDate = new List<Tuple<City, DateTime>>();
 		public void LogRouteRequests(object source, RouteRequestEventArgs args)
 		{
+			Tuple<City, DateTime> tuple = new Tuple<City, DateTime>(args.FromCity, GetCurrentDate);
+			cityRequestsDate.Add(tuple);
+
 			if (dict.ContainsKey(args.ToCity))
 			{
+
+				tuple = new Tuple<City, DateTime>(args.ToCity, GetCurrentDate);
+				cityRequestsDate.Add(tuple);
+
 				dict[args.ToCity]++;
 			}
 			else
@@ -46,7 +53,8 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		// Was waren die drei bevölkerungsreichsten Städte, die an einem bestimmten Tag abgefragt wurden?
 		public IEnumerable<City> GetThreeBiggestCityOnDay(DateTime day)
 		{
-			return cityRequestsDate.Where(r => r.Item2.Equals(day.Date)).OrderByDescending(c => c.Item1.Population).SelectMany(t => new[]
+			Console.WriteLine("DateTime.Now: " + DateTime.Now);
+			return cityRequestsDate.Where(r => r.Item2.Date.Equals(day.Date)).OrderByDescending(c => c.Item1.Population).SelectMany(t => new[]
 			{
 				t.Item1
 			}).Distinct().Take(3);
@@ -55,7 +63,8 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		//Geben Sie die drei Städte mit den längsten Städtenamen zurück, die im gegebenen Zeitraum(inklusive from und to) abgefragt wurden.
 		public IEnumerable<City> GetThreeLongestCityNamesWithinPeriod(DateTime from, DateTime to)
 		{
-			return cityRequestsDate.Where(r => r.Item2 > from.Date && r.Item2 < to.Date).OrderByDescending(c => c.Item1.Name.Length).SelectMany(t => new[]
+
+			return cityRequestsDate.Where(r => r.Item2.Date >= from.Date && r.Item2.Date <= to.Date).OrderByDescending(c => c.Item1.Name.Length).SelectMany(t => new[]
 			{
 				t.Item1
 			}).Distinct().Take(3);
@@ -65,7 +74,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		public IEnumerable<City> GetNotRequestedCities(Cities cities)
 		{
 			return cities.CityListEnumerator.Where(c => !(cityRequestsDate
-				.Where(r => r.Item2 < GetCurrentDate.AddDays(14))
+				.Where(r => r.Item2 <= GetCurrentDate.AddDays(14))
 				.SelectMany(t => new[]
 				{
 					t.Item1

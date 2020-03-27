@@ -44,6 +44,10 @@ namespace RoutePlannerConsole
             Console.WriteLine(cities["Bern"].Name);
             Console.WriteLine(cities[0].Name);
             Console.WriteLine("------------------------------------------");
+
+            Console.WriteLine("DateTime.Now: " + DateTime.Now);
+            Console.WriteLine("DateTime.Now.Date: " + DateTime.Now.Date);
+            Console.WriteLine("DateTime.Now.Date.Day: " + DateTime.Now.Date.Day);
         }
     }
 }
