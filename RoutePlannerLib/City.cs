@@ -38,7 +38,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
         public override int GetHashCode()
         {
-            Console.WriteLine(this.Name.GetHashCode() ^ this.Country.GetHashCode());
+            //Console.WriteLine("Hash: " + (this.Name.GetHashCode() ^ this.Country.GetHashCode()));
             return this.Name.GetHashCode() ^ this.Country.GetHashCode();
         }
     }

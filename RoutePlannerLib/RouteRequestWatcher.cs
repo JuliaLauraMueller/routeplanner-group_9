@@ -53,6 +53,13 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		public IEnumerable<City> GetThreeBiggestCityOnDay(DateTime day)
 		{
 			Console.WriteLine("DateTime.Now: " + DateTime.Now);
+			var items = cityRequestsDate.Where(r => r.Item2.Date.Equals(day.Date)).OrderByDescending(c => c.Item1.Population).SelectMany(t => new[]
+		   {
+				t.Item1
+			}).Distinct().Take(3);
+			foreach (var c in items) {
+				Console.WriteLine("item: " + c.Name);
+			}
 			return cityRequestsDate.Where(r => r.Item2.Date.Equals(day.Date)).OrderByDescending(c => c.Item1.Population).SelectMany(t => new[]
 			{
 				t.Item1
@@ -73,7 +80,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		public IEnumerable<City> GetNotRequestedCities(Cities cities)
 		{
 			return cities.CityListEnumerator.Where(c => !(cityRequestsDate
-				.Where(r => r.Item2 <= GetCurrentDate.AddDays(14))
+				.Where(r => r.Item2 < GetCurrentDate.AddDays(14))
 				.SelectMany(t => new[]
 				{
 					t.Item1

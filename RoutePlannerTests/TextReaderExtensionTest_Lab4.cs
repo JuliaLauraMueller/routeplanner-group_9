@@ -50,7 +50,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
         public void TestCorrectNamespace()
         {
             Type type = typeof(TextReaderExtensions);
-            Console.WriteLine(type.FullName);
+            Console.WriteLine("Full Name: " + type.FullName);
             Assert.IsTrue(type.FullName.Equals("Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util.TextReaderExtensions"));
         }
     }
