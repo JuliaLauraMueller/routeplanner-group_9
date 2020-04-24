@@ -55,6 +55,9 @@
     <Compile Update="WayPointTest_Lab4.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Update="LinksTest_Lab7.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Update="citiesTestDataLab2.txt">

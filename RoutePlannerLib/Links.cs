@@ -5,6 +5,7 @@ using System.Linq;
 
 using RoutePlannerLib;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util;
+using System.Threading.Tasks;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 {
@@ -73,7 +74,14 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
                 .ToArray();
 		}
 
-		public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportMode mode)
+        public Task<List<Link>> FindShortestRouteBetweenAsync(string fromCity, string toCity, TransportMode mode, IProgress<string> reportProgress = null)
+        {
+			var resultAsTask = Task.Run(() => FindShortestRouteBetween(fromCity, toCity, mode, reportProgress));
+
+			return resultAsTask;
+		}
+
+		public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportMode mode, IProgress<string> reportProgress = null)
 		{
 			RouteRequested?.Invoke(this, new RouteRequestEventArgs(cities[fromCity], cities[toCity], mode));
 
@@ -88,6 +96,9 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 				}
 			});
 
+            if(reportProgress != null)
+				reportProgress.Report("Initialized vistited and pending, done");
+
 			while (pending.Any())
 			{
 				var cur = pending.Last();
@@ -96,6 +107,8 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 				if (!visited.ContainsKey(cur.VisitingCity))
 				{
 					visited[cur.VisitingCity] = cur;
+					if (reportProgress != null)
+						reportProgress.Report("Current item marked as visited item, done");
 
 					foreach (var link in FindAllLinksForCity(cur.VisitingCity, mode))
 						pending.Add(new DijkstraNode()
@@ -104,12 +117,16 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 							Distance = cur.Distance + link.Distance,
 							PreviousCity = cur.VisitingCity
 						});
+					if (reportProgress != null)
+						reportProgress.Report("New pending item was added, done");
 				}
 			}
 
 			//check if any routes where found
 			if (!visited.ContainsKey(cities[toCity]))
 				return null;
+			if (reportProgress != null)
+				reportProgress.Report("Check if any routes where found, done");
 
 			//list of cities that we passed along the way
 			var citiesEnRoute = new List<City>();
@@ -117,9 +134,13 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 				citiesEnRoute.Add(c);
 			citiesEnRoute.Reverse();
 
+
 			//for each city en route, find the link (path) which will be passed along the way. Return all paths as Enumerable.
 			IEnumerable<Link> paths = FindLinksToCitiesEnRoute(citiesEnRoute);
+			if (reportProgress != null)
+				reportProgress.Report("All paths are saved as IEnumerable, done");
 			return paths.ToList();
+
 		}
 
         private IEnumerable<Link> FindLinksToCitiesEnRoute(List<City> citiesEnRoute)
