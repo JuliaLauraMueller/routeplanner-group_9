@@ -6,6 +6,7 @@ using System.Linq;
 using RoutePlannerLib;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 {
@@ -164,6 +165,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
 		public List<List<Link>> FindAllShortestRoutesParallel()
 		{
+			/*
 			List<List<Link>> allShortestRoutes = new List<List<Link>>();
 			Parallel.ForEach(cities.CityListEnumerator, fromCity =>
 			{
@@ -176,8 +178,24 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 					allShortestRoutes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Ship));
 					allShortestRoutes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Tram));
 				});
+			});*/
+
+
+			var routes = new ConcurrentBag<List<Link>>();
+			Parallel.ForEach(cities.CityListEnumerator, fromCity =>
+			{
+				foreach (var toCity in cities.CityListEnumerator)
+				{
+					routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Bus));
+					routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Car));
+					routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Flight));
+					routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Rail));
+					routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Ship));
+					routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Tram));
+				}
 			});
-			return allShortestRoutes;
+
+			return routes.ToList();
 		}
 
 
