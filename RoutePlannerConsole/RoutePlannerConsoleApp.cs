@@ -48,6 +48,12 @@ namespace RoutePlannerConsole
             Console.WriteLine("DateTime.Now: " + DateTime.Now);
             Console.WriteLine("DateTime.Now.Date: " + DateTime.Now.Date);
             Console.WriteLine("DateTime.Now.Date.Day: " + DateTime.Now.Date.Day);
+            Console.WriteLine("------------------------------------------");
+
+            var links = new Links(cities);
+            links.ReadLinks("linksTestDataLab8.txt");
+            Console.WriteLine($"Anzahl links: {links.Count}");
+            Console.WriteLine("------------------------------------------");
         }
     }
 }

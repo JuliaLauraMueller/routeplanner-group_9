@@ -56,6 +56,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 					}
 					catch (KeyNotFoundException)
 					{
+						Console.WriteLine("aasdfasdf");
 						//missing cities should be ignored
 					}
 				}
@@ -143,7 +144,35 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
 		}
 
-        private IEnumerable<Link> FindLinksToCitiesEnRoute(List<City> citiesEnRoute)
+		public List<List<Link>> FindAllShortestRoutes()
+		{
+			List<List<Link>> allShortestRoutes = new List<List<Link>>();
+			foreach (var link in links)
+			{
+				Console.WriteLine(link.TransportMode);
+				// foreach (TransportMode.)
+				allShortestRoutes.Add(FindShortestRouteBetween(link.FromCity.Name, link.ToCity.Name, TransportMode.Bus));
+				allShortestRoutes.Add(FindShortestRouteBetween(link.FromCity.Name, link.ToCity.Name, TransportMode.Car));
+				allShortestRoutes.Add(FindShortestRouteBetween(link.FromCity.Name, link.ToCity.Name, TransportMode.Flight));
+				allShortestRoutes.Add(FindShortestRouteBetween(link.FromCity.Name, link.ToCity.Name, TransportMode.Rail));
+				allShortestRoutes.Add(FindShortestRouteBetween(link.FromCity.Name, link.ToCity.Name, TransportMode.Ship));
+				allShortestRoutes.Add(FindShortestRouteBetween(link.FromCity.Name, link.ToCity.Name, TransportMode.Tram));
+			}
+			return allShortestRoutes;
+		}
+
+		public List<List<Link>> FindAllShortestRoutesParallel()
+		{
+			List<List<Link>> allShortestRoutes = new List<List<Link>>();
+			Parallel.ForEach(links, link =>
+			{
+				allShortestRoutes.Add(FindShortestRouteBetween(link.FromCity.Name, link.ToCity.Name, link.TransportMode));
+			});
+			return allShortestRoutes;
+		}
+
+
+		private IEnumerable<Link> FindLinksToCitiesEnRoute(List<City> citiesEnRoute)
         {
             var findList = new List<Link>();
 			for (var i = 0; i < citiesEnRoute.Count - 1; i++)
