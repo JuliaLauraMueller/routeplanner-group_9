@@ -52,41 +52,30 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		// Was waren die drei bevölkerungsreichsten Städte, die an einem bestimmten Tag abgefragt wurden?
 		public IEnumerable<City> GetThreeBiggestCityOnDay(DateTime day)
 		{
-			Console.WriteLine("DateTime.Now: " + DateTime.Now);
-			var items = cityRequestsDate.Where(r => r.Item2.Date.Equals(day.Date)).OrderByDescending(c => c.Item1.Population).SelectMany(t => new[]
-		   {
-				t.Item1
-			}).Distinct().Take(3);
-			foreach (var c in items) {
-				Console.WriteLine("item: " + c.Name);
-			}
-			return cityRequestsDate.Where(r => r.Item2.Date.Equals(day.Date)).OrderByDescending(c => c.Item1.Population).SelectMany(t => new[]
-			{
-				t.Item1
-			}).Distinct().Take(3);
+			return
+				cityRequestsDate.Where(request => request.Item2.Date == day.Date)
+					.Select(request => request.Item1)
+					.Distinct()
+					.OrderByDescending(c => c.Population)
+					.Take(3);
 		}
 
-		//Geben Sie die drei Städte mit den längsten Städtenamen zurück, die im gegebenen Zeitraum(inklusive from und to) abgefragt wurden.
 		public IEnumerable<City> GetThreeLongestCityNamesWithinPeriod(DateTime from, DateTime to)
 		{
-
-			return cityRequestsDate.Where(r => r.Item2.Date >= from.Date && r.Item2.Date <= to.Date).OrderByDescending(c => c.Item1.Name.Length).SelectMany(t => new[]
-			{
-				t.Item1
-			}).Distinct().Take(3);
+			return
+				cityRequestsDate.Where(
+						request => request.Item2.Date >= from.Date && request.Item2.Date <= to.Date)
+					.Select(request => request.Item1)
+					.Distinct()
+					.OrderByDescending(c => c.Name.Length)
+					.Take(3);
 		}
 
-		//Welche Städte wurden in den letzten zwei Wochen nie als Ziel angefragt?
 		public IEnumerable<City> GetNotRequestedCities(Cities cities)
 		{
-			return cities.CityListEnumerator.Where(c => !(cityRequestsDate
-				.Where(r => r.Item2 < GetCurrentDate.AddDays(14))
-				.SelectMany(t => new[]
-				{
-					t.Item1
-				})
-				.Contains(c)))
-			.Distinct();
+			return cities.CityListEnumerator.Where(a => cityRequestsDate
+						.Where(b => b.Item2 >= GetCurrentDate.AddDays(-14))
+						.All(c => !c.Item1.Equals(a)));
 		}
 	}
 }
