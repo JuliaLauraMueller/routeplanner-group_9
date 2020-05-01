@@ -165,21 +165,6 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
 		public List<List<Link>> FindAllShortestRoutesParallel()
 		{
-			/*
-			List<List<Link>> allShortestRoutes = new List<List<Link>>();
-			Parallel.ForEach(cities.CityListEnumerator, fromCity =>
-			{
-				Parallel.ForEach(cities.CityListEnumerator, toCity =>
-				{
-					allShortestRoutes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Bus));
-					allShortestRoutes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Car));
-					allShortestRoutes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Flight));
-					allShortestRoutes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Rail));
-					allShortestRoutes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Ship));
-					allShortestRoutes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Tram));
-				});
-			});*/
-
 
 			var routes = new ConcurrentBag<List<Link>>();
 			Parallel.ForEach(cities.CityListEnumerator, fromCity =>
