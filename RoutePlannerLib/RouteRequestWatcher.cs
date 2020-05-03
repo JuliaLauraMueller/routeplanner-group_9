@@ -12,21 +12,23 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		private Dictionary<City, int> dict = new Dictionary<City, int>();
 		public virtual DateTime GetCurrentDate { get { return DateTime.Now; } }
 		private readonly List<Tuple<City, DateTime>> cityRequestsDate = new List<Tuple<City, DateTime>>();
+
 		public void LogRouteRequests(object source, RouteRequestEventArgs args)
 		{
-			Tuple<City, DateTime> tuple = new Tuple<City, DateTime>(args.FromCity, GetCurrentDate);
+			//Tuple<City, DateTime> tuple = new Tuple<City, DateTime>(args.FromCity, GetCurrentDate);
+			Tuple<City, DateTime> tuple = new Tuple<City, DateTime>(args.ToCity, GetCurrentDate);
 			cityRequestsDate.Add(tuple);
 
-			if (dict.ContainsKey(args.ToCity))
+            if (dict.ContainsKey(args.ToCity))
 			{
-				tuple = new Tuple<City, DateTime>(args.ToCity, GetCurrentDate);
-				cityRequestsDate.Add(tuple);
-
+				//tuple = new Tuple<City, DateTime>(args.ToCity, GetCurrentDate);
+				//cityRequestsDate.Add(tuple);
 				dict[args.ToCity]++;
 			}
 			else
 			{
-				dict.Add(args.ToCity, 1);
+				//dict.Add(args.ToCity, 1);
+				dict[args.ToCity] = 1;
 			}
 
 			Console.WriteLine("Current Request State");

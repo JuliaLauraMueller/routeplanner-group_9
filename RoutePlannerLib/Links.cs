@@ -165,22 +165,34 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
 		public List<List<Link>> FindAllShortestRoutesParallel()
 		{
+            //var routes = new ConcurrentBag<List<Link>>();
+            //Parallel.ForEach(cities.CityListEnumerator, fromCity =>
+            //{
+            //    foreach (var toCity in cities.CityListEnumerator)
+            //    {
+            //        routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Bus));
+            //        routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Car));
+            //        routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Flight));
+            //        routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Rail));
+            //        routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Ship));
+            //        routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Tram));
+            //    }
+            //});
 
-			var routes = new ConcurrentBag<List<Link>>();
-			Parallel.ForEach(cities.CityListEnumerator, fromCity =>
-			{
-				foreach (var toCity in cities.CityListEnumerator)
-				{
-					routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Bus));
-					routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Car));
-					routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Flight));
-					routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Rail));
-					routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Ship));
-					routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Tram));
-				}
-			});
+            //return routes.ToList();
 
-			return routes.ToList();
+            return AllTransportModes()
+                .SelectMany(from => Enumerable.Range(0, cities.Count)
+                .SelectMany(to => Enumerable.Range(0, cities.Count)
+                .Select(i => FindShortestRouteBetween(cities[to].Name, cities[i].Name, from)).AsParallel()
+                             )
+                         )
+                         .ToList();
+        }
+
+		public IEnumerable<TransportMode> AllTransportModes()
+		{
+			return Enum.GetValues(typeof(TransportMode)).Cast<TransportMode>();
 		}
 
 

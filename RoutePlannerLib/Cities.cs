@@ -3,6 +3,7 @@ using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util;
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -18,10 +19,10 @@ namespace RoutePlannerLib
             get { return cityList; }
         }
 
-        //public ReadOnlyCollection<City> ReadOnly
-        //{
-        //    get { return cityList.AsReadOnly(); }
-        //}
+        public ReadOnlyCollection<City> ReadOnly
+        {
+            get { return cityList.AsReadOnly(); }
+        }
 
 
         public int Count { get { return this.cityList.Count; } }
