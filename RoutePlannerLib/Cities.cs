@@ -1,21 +1,34 @@
-﻿using Fhnw.Ecnf.RoutPlanner.RoutePlannerLib;
+﻿using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
+using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util;
+
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 
 namespace RoutePlannerLib
 {
-
-
     public class Cities
     {
         private List<City> cityList = new List<City>();
+
+        public IEnumerable<City> CityListEnumerator
+        {
+            get { return cityList; }
+        }
+
+        public ReadOnlyCollection<City> ReadOnly
+        {
+            get { return cityList.AsReadOnly(); }
+        }
+
+
         public int Count { get { return this.cityList.Count; } }
 
         public City this[int index] // indexer implementation
         {
-            
             get {
                 if (index > cityList.Count)
                 {
@@ -25,6 +38,7 @@ namespace RoutePlannerLib
                 {
                     throw new ArgumentOutOfRangeException("Index darf nicht negativ sein");
                 }
+
                 return this.cityList[index];
             }
             set {
@@ -36,15 +50,15 @@ namespace RoutePlannerLib
                 {
                     throw new ArgumentOutOfRangeException("Index darf nicht negativ sein");
                 }
+
                 cityList[index] = value;
             }
-
         }
 
         public Predicate<City> ByName(string cityName) {
             return delegate (City city)
             {
-                return city.Name.Equals(cityName, StringComparison.InvariantCultureIgnoreCase); // ToLower() vellech?
+                return city.Name.Equals(cityName, StringComparison.InvariantCultureIgnoreCase);
             };
         }
 
@@ -63,7 +77,6 @@ namespace RoutePlannerLib
                 }
 
                 var foundCity = this.cityList.Find(ByName(cityName));
-                //var foundCity = FindCity(ByName);
 
                 if (foundCity == null)
                 {
@@ -74,52 +87,40 @@ namespace RoutePlannerLib
             }
         }
 
-        public int ReadCities(string filename){
 
+        public int ReadCities(string filename)
+        {
             int counter = 0;
-
             using (var reader = new StreamReader(filename))
             {
-                string cityProperty;
+                IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines('\t');
 
-                while ((cityProperty = reader.ReadLine()) != null)
-                {
-                    string[] cityPropertyArray = cityProperty.Split("\t");
-                    cityList.Add(new City(cityPropertyArray[0].ToString(), cityPropertyArray[1].ToString(), int.Parse(cityPropertyArray[2]),
-                        double.Parse(cityPropertyArray[3], CultureInfo.InvariantCulture), double.Parse(cityPropertyArray[4], CultureInfo.InvariantCulture)));
+                var list = citiesAsStrings.Select(city => new City(city[0].Trim(), city[1].Trim(),
+                        int.Parse(city[2]), double.Parse(city[3],
+                        CultureInfo.InvariantCulture), double.Parse(city[4],
+                        CultureInfo.InvariantCulture))).ToArray();
 
-                    counter++;
-                    
-                }
-                // Console.WriteLine("Liste Stadtname: " + cityList[0].Name);
-                // Console.WriteLine("Liste Stadtname: " + cityList[1].Name);
+                cityList.AddRange(list);
+                counter = list.Count();
             }
-
-            return counter;
+           return counter;
         }
 
-        
-
-        public IList<City> FindNeighbours(WayPoint location, double distance)
+        public IEnumerable<City> FindNeighbours(WayPoint location, double distance)
         {
-           List<City> nearByCities = new List<City>();
-
-            for (int i = 0; i < cityList.Count; i++)
-            {
-                if (location.Distance(cityList[i].Location) < distance)
-                {
-                    nearByCities.Add(cityList[i]);
-                    
-                }
-            }
-            return nearByCities;
+           return cityList.Where(i => location.Distance(i.Location) < distance);
         }
-
 
         public int AddCity(City city)
         {
             cityList.Add(city);
             return cityList.Count;
+        }
+
+        // Wie gross ist die Bevölkerungszahl der drei Städte mit den kürzesten Städtenamen?
+        public int GetPopulationOfShortestCityNames()
+        {
+            return CityListEnumerator.OrderBy(c => c.Name.Length).Take(3).Sum(p => p.Population);
         }
     }
 

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Fhnw.Ecnf.RoutPlanner.RoutePlannerLib
+namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 {
     public class City
     {
@@ -20,5 +18,28 @@ namespace Fhnw.Ecnf.RoutPlanner.RoutePlannerLib
 
         }
 
+        public override bool Equals(object city)
+        {
+            if (city == null)
+            {
+                return false;
+            }
+
+            if (city is City c)
+            {
+                if (this.Name.ToLower().Equals(c.Name.ToLower()) && this.Country.ToLower().Equals(c.Country.ToLower()))
+                {
+                    return true;
+                }
+            }
+            return false;
+            
+        }
+
+        public override int GetHashCode()
+        {
+            //Console.WriteLine("Hash: " + (this.Name.GetHashCode() ^ this.Country.GetHashCode()));
+            return this.Name.GetHashCode() ^ this.Country.GetHashCode();
+        }
     }
 }

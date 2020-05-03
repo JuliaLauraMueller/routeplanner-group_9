@@ -2,7 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Fhnw.Ecnf.RoutPlanner.RoutePlannerLib</RootNamespace>
+    <RootNamespace>Fhnw.Ecnf.RoutePlanner.RoutePlannerLib</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="DijkstraAlgorithm.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Util\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Util\TextReaderExtensions.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
 </Project>

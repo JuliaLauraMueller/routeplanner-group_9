@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Fhnw.Ecnf.RoutPlanner.RoutePlannerLib
+namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 {
 
     public class WayPoint
@@ -32,6 +30,28 @@ namespace Fhnw.Ecnf.RoutPlanner.RoutePlannerLib
                 * Math.Cos(this.Longitude * gradToRad - target.Longitude * gradToRad));
             return rad;
         }
-    }
 
+        public static WayPoint operator +(WayPoint left, WayPoint right)
+        {
+            return new WayPoint(left.Name , (left.Latitude + right.Latitude), (left.Longitude + right.Longitude));
+        }
+
+        public static WayPoint operator -(WayPoint left, WayPoint right)
+        {
+            double latitude = (left.Latitude - right.Latitude);
+            double longitude = (left.Longitude - right.Longitude);
+
+            if(latitude < 0)
+            {
+                latitude *= (-1);
+            }
+
+            if (longitude < 0)
+            {
+                longitude *= (-1);
+            }
+
+            return new WayPoint(left.Name, latitude, longitude);
+        }
+    }
 }
