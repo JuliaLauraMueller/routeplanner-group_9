@@ -10,6 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Util\" />
+    <Folder Include="Dynamic\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Util\TextReaderExtensions.cs">
