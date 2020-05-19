@@ -67,6 +67,11 @@ namespace RoutePlannerLib
             return cityList.Find(cityName);
         }
 
+        public City FindCity(string cityName)
+        {
+            return cityList.Find(c => c.Name.Equals(cityName, StringComparison.OrdinalIgnoreCase));
+        }
+
         public City this[string cityName]
         {
             get

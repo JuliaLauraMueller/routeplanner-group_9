@@ -61,6 +61,9 @@
     <Compile Update="LinksTest_Lab7.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Update="DynamicWorldTest_Lab9.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Update="citiesTestDataLab2.txt">

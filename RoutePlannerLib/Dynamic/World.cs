@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Dynamic;
+using System.Linq;
 using RoutePlannerLib;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Dynamic
@@ -11,17 +12,22 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Dynamic
         public World(Cities cities)
         {
             this.cities = cities;
-
         }
 
-        public dynamic CityName(City c)
+        public override bool TryInvokeMember(            InvokeMemberBinder binder, object[] args,            out object result)
         {
-            if (cities.FindCity(c.Name))
+
+            var city = cities.FindCity(binder.Name);
+
+            if (city == null)
             {
-                return c;
+                result = String.Format("The city \"{0}\" does not exist!", binder.Name);
+                return false;
             }
             else
-                return $"The city {c} does not exist";
+                result = city;
+                
+            return true;
         }
     }
 }
