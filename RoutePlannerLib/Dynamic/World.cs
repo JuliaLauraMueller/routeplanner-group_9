@@ -2,6 +2,7 @@
 using System.Dynamic;
 using System.Linq;
 using RoutePlannerLib;
+using Microsoft.CSharp;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Dynamic
 {

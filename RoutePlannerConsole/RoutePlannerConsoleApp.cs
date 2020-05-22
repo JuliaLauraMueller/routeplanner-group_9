@@ -50,7 +50,7 @@ namespace RoutePlannerConsole
             Console.WriteLine("DateTime.Now.Date.Day: " + DateTime.Now.Date.Day);
             Console.WriteLine("------------------------------------------");
 
-            var links = new Links(cities);
+            ILinks links = LinksFactory.Create(cities);
             links.ReadLinks("linksTestDataLab8.txt");
             Console.WriteLine($"Anzahl links: {links.Count}");
             Console.WriteLine("------------------------------------------");

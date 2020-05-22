@@ -14,7 +14,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 	///	<summary>
 	///	Manages	links from a city to another city.
 	///	</summary>
-	public class Links
+	public class Links : ILinks
 	{
 		private List<Link> links = new List<Link>();
 		private Cities cities;
