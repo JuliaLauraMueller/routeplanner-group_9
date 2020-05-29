@@ -68,6 +68,9 @@
     <Compile Update="DynamicWorldTest_Lab9.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Update="DeSerializerTest_Lab10.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Update="citiesTestDataLab2.txt">
