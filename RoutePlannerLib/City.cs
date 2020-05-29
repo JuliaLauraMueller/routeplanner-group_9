@@ -17,6 +17,10 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
             Location = new WayPoint(name, latitude, longitude);
 
         }
+        public City()
+        {
+
+        }
 
         public override bool Equals(object city)
         {

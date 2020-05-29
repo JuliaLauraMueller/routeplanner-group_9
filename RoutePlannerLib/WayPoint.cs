@@ -14,6 +14,10 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
             Latitude = latitude;
             Longitude = longitude;
         }
+        public WayPoint()
+        {
+
+        }
 
         public override string ToString()
         {

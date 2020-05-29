@@ -9,7 +9,6 @@
     <Compile Remove="DijkstraAlgorithm.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Util\" />
     <Folder Include="Dynamic\" />
   </ItemGroup>
   <ItemGroup>
