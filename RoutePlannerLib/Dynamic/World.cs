@@ -18,19 +18,19 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Dynamic
         public override bool TryInvokeMember(            InvokeMemberBinder binder, object[] args,            out object result)
         {
 
-            //var city = cities.FindCity(binder.Name);
+            var city = cities.FindCity(binder.Name);
+
             try
             {
-                var city = cities.FindCity(binder.Name);
+                //var city = cities.FindCity(binder.Name);
                 result = city;
                 return true;
             }  
             catch
             {
-                result = String.Format("The city \"Entenhausen\" does not exist!", binder.Name); //\"{0}\"  \"Entenhausen\" 
-                return true;
+                result = String.Format("The city \"{0}\" does not exist!", binder.Name); //\"{0}\"  \"Entenhausen\" 
+                return false;
             }
-            
         }
     }
 }
