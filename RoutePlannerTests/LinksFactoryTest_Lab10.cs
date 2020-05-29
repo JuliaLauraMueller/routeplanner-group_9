@@ -136,6 +136,11 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
             return null;
         }
 
+        public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportMode mode, IProgress<string> reportProgress = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public int ReadLinks(string filename)
         {
             return 42;
@@ -151,6 +156,11 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerTest
         public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportMode mode)
         {
             return null;
+        }
+
+        public List<Link> FindShortestRouteBetween(string fromCity, string toCity, TransportMode mode, IProgress<string> reportProgress = null)
+        {
+            throw new NotImplementedException();
         }
 
         public int ReadLinks(string filename)
