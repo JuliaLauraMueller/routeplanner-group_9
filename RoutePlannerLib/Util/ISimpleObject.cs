@@ -7,6 +7,5 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util
     public interface ISimpleObject
     {
         void Next(object obj = null);
-
     }
 }

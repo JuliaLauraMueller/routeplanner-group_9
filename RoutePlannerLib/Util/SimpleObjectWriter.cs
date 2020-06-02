@@ -4,7 +4,7 @@ using System.IO;
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util
 {
 
-    public class SimpleObjectWriter : ISimpleObject
+    public class SimpleObjectWriter 
     {
         /*
 Sie sollen nun die eingelesenen Städte mit einem eigenen Serializer/Deserializer persistieren.
@@ -27,18 +27,21 @@ Hinweise:
         public string Message;
         public int Number;
         public double DecNumber;
-        private TextWriter Stream;
+        private TextWriter StreamWriter;
 
         public SimpleObjectWriter(TextWriter stream)
         {
-            Stream = stream;
+            StreamWriter = stream;
         }
 
 
-        public void Next(object c1)
+        public void Next(object obj)
         {
             throw new NotImplementedException();
-        }
+            // FullName bekommen von GetType() mit obj
 
+            // alle Werte String, int und double hier abfangen und abfragen
+            // if Prototype is typeof (String)  etc.
+        }
     }
 }
