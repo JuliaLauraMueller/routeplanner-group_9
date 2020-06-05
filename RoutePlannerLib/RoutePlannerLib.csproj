@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <Compile Remove="DijkstraAlgorithm.cs" />
+    <Compile Remove="Util\ISimpleObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dynamic\" />

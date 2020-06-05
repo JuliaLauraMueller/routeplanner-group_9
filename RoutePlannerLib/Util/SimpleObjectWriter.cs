@@ -1,47 +1,42 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util
 {
 
     public class SimpleObjectWriter 
-    {
-        /*
-Sie sollen nun die eingelesenen Städte mit einem eigenen Serializer/Deserializer persistieren.
-Schreiben Sie einen generischen Serializer, der in der Lage ist beliebige Klassen und deren
-öffentlichen Properties vom Typ string, double und int mittels Reflection zu serialisieren und
-deserialisieren. Das Format der Serialisierung finden Sie im Anhang.
-
-Legen Sie dazu die neuen Klassen SimpleObjectReader und SimpleObjectWriter im
-Namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util an. Das Interface der
-Klassen können Sie aus den Unittests ableiten.
-
-Hinweise:
-
-- Sie sollen die Next-Methoden rekursiv implementieren, damit «nested Objects» korrekt
-  behandelt werden.
-- Verwenden Sie Assembly.GetType(string) damit auch Typen gefunden werden, welche
-  internal markiert sind.
-
-*/
-        public string Message;
-        public int Number;
-        public double DecNumber;
-        private TextWriter StreamWriter;
+    { 
+        private TextWriter streamWriter;
 
         public SimpleObjectWriter(TextWriter stream)
         {
-            StreamWriter = stream;
+            streamWriter = stream;
         }
-
 
         public void Next(object obj)
         {
-            throw new NotImplementedException();
-            // FullName bekommen von GetType() mit obj
-
-            // alle Werte String, int und double hier abfangen und abfragen
-            // if Prototype is typeof (String)  etc.
+            if(obj != null)
+            {
+                streamWriter.WriteLine("Instance of " + obj.GetType().FullName);
+                foreach (var i in obj.GetType().GetProperties().OrderBy(i => i.Name))
+                {
+                    if (i.PropertyType == typeof(string))
+                        streamWriter.WriteLine(i.Name + "=\"" + i.GetValue(obj) + "\"");
+                    else if(i.PropertyType == typeof(int))
+                        streamWriter.WriteLine(i.Name + "=" + i.GetValue(obj).ToString());
+                    else if (i.PropertyType == typeof(double))
+                        streamWriter.WriteLine(i.Name + "="
+                            + ((double)i.GetValue(obj)).ToString(CultureInfo.InvariantCulture));
+                    else
+                    {
+                        streamWriter.WriteLine(i.Name + " is a nested object...");
+                        Next(i.GetValue(obj));
+                    }
+                }
+                streamWriter.WriteLine("End of instance");
+            }
         }
     }
 }

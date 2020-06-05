@@ -165,36 +165,16 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
 		public List<List<Link>> FindAllShortestRoutesParallel()
 		{
-            //var routes = new ConcurrentBag<List<Link>>();
-            //Parallel.ForEach(cities.CityListEnumerator, fromCity =>
-            //{
-            //    foreach (var toCity in cities.CityListEnumerator)
-            //    {
-            //        routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Bus));
-            //        routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Car));
-            //        routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Flight));
-            //        routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Rail));
-            //        routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Ship));
-            //        routes.Add(FindShortestRouteBetween(fromCity.Name, toCity.Name, TransportMode.Tram));
-            //    }
-            //});
-
-            //return routes.ToList();
-
-            return AllTransportModes()
-                .SelectMany(from => Enumerable.Range(0, cities.Count)
-                .SelectMany(to => Enumerable.Range(0, cities.Count)
-                .Select(i => FindShortestRouteBetween(cities[to].Name, cities[i].Name, from)).AsParallel()
-                             )
-                         )
-                         .ToList();
+			// allTransportModes()
+			//.AsParallel()
+			return ParallelEnumerable.Range(0, cities.Count)
+				.SelectMany(from => ParallelEnumerable.Range(0, cities.Count)
+				    .Select(f => Tuple.Create(from, f)))
+				.SelectMany(to => Enum.GetValues(typeof(TransportMode)).OfType<TransportMode>()
+				    .Select(tm => Tuple.Create(to.Item1, to.Item2, tm)))
+				.Select(i => FindShortestRouteBetween(cities[i.Item1].Name, cities[i.Item2].Name, i.Item3))
+				.ToList();          
         }
-
-		public IEnumerable<TransportMode> AllTransportModes()
-		{
-			return Enum.GetValues(typeof(TransportMode)).Cast<TransportMode>();
-		}
-
 
 		private IEnumerable<Link> FindLinksToCitiesEnRoute(List<City> citiesEnRoute)
         {
