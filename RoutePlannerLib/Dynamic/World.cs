@@ -3,6 +3,7 @@ using System.Dynamic;
 using System.Linq;
 using RoutePlannerLib;
 using Microsoft.CSharp;
+using System.Collections.Generic;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Dynamic
 {
@@ -12,25 +13,25 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Dynamic
 
         public World(Cities cities)
         {
-            this.cities = cities;
+            // if null passed just create an empty to implement graceful behaviour
+            this.cities = cities ?? new Cities();
         }
 
         public override bool TryInvokeMember(            InvokeMemberBinder binder, object[] args,            out object result)
         {
 
-            var city = cities.FindCity(binder.Name);
-
             try
             {
+                var city_new = cities[binder.Name]; // Senn's solution
                 //var city = cities.FindCity(binder.Name);
-                result = city;
-                return true;
+                result = city_new;
             }  
-            catch
+            catch (KeyNotFoundException)
             {
-                result = String.Format("The city \"{0}\" does not exist!", binder.Name); //\"{0}\"  \"Entenhausen\" 
-                return false;
+                result = $"The city \"{binder.Name}\" does not exist!";
+                //result = String.Format("The city \"{0}\" does not exist!", binder.Name); //\"{0}\"  \"Entenhausen\" 
             }
+            return true;
         }
     }
 }

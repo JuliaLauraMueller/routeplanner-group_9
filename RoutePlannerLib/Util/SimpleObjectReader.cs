@@ -22,25 +22,27 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util
          
     */
 
-    public class SimpleObjectReader : ISimpleObject
+    public class SimpleObjectReader
     {
         public string Message;
         public int Number;
         public double DecNumber;
         private TextReader Stream;
 
-        public SimpleObjectReader()
-        {
-        }
-
         public SimpleObjectReader(TextReader sr)
         {
             Stream = sr;
         }
 
-        public void Next(object obj = null)
+        public object Next()
         {
             throw new NotImplementedException();
+        }
+
+        static private object CreateInstance(string _class)
+        {
+            // Durch alle Assyemlbies durch gehen von AppDomain.CurrentDomain.GetAssemblies()
+            return null;
         }
     }
 }

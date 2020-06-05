@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util
 {
 
-    public class SimpleObjectWriter : ISimpleObject
+    public class SimpleObjectWriter 
     {
         /*
 Sie sollen nun die eingelesenen Städte mit einem eigenen Serializer/Deserializer persistieren.
@@ -29,57 +27,21 @@ Hinweise:
         public string Message;
         public int Number;
         public double DecNumber;
-        private TextWriter Stream;
+        private TextWriter StreamWriter;
 
         public SimpleObjectWriter(TextWriter stream)
         {
-            Stream = stream;         
-        }
-        long fakultaet_rek(long n)
-        { 
-        if(n==1){
-            return 1;
-        }
-        else{ // Rekursionsfall
-        long ergebnis = n * fakultaet_rek(n - 1); return ergebnis;
-        }
+            StreamWriter = stream;
         }
 
-public void Next(object c1)
+
+        public void Next(object obj)
         {
-            if(c1 != null)
-            {
-                Type myType = c1.GetType();
-                var obj = c1;
-                var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-                var newStream = Stream;
-                var i = 0;
-                Type type = assemblies[0].GetType(myType.FullName); ;
-                while (i < assemblies.Length && type != null)
-                {
-                    type = assemblies[i].GetType(myType.FullName); // type of assembly
-                }
-                Stream.WriteLine($"Instance of {{type}}\r\n");
-                
+            throw new NotImplementedException();
+            // FullName bekommen von GetType() mit obj
 
-                IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
-
-                foreach (PropertyInfo prop in props)
-                {
-                    object propValue = prop.GetValue(c1, null);
-                    //if (propValue.GetType())
-                    //{
-
-                        newStream.WriteLine("Location is a nested object...\r\n");
-                        Next(propValue);
-                    //}
-                    //else
-                    //{
-                        newStream.WriteLine(prop.Name+"="+propValue+"\r\n");
-                    //}
-                    // Do something with propValue
-                }
-            }
+            // alle Werte String, int und double hier abfangen und abfragen
+            // if Prototype is typeof (String)  etc.
         }
     }
 }
