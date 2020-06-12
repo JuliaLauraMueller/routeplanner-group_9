@@ -1,6 +1,10 @@
 ﻿using System;
+using System.IO;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.FileExtensions;
 using RoutePlannerLib;
+using Serilog;
 
 namespace RoutePlannerConsole
 {
@@ -8,6 +12,17 @@ namespace RoutePlannerConsole
     {
         static void Main(string[] args)
         {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            var logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+
+            logger.Information("Hello, world!");
+
             Console.WriteLine("Welcome to Route Planner (Version {0})", typeof(RoutePlannerConsoleApp).Assembly.GetName().Version);
 
             // WayPoints
@@ -34,8 +49,8 @@ namespace RoutePlannerConsole
             Console.WriteLine("Neue City hinzugefügt, Anzahl: " + cities.AddCity(city1));
             Console.WriteLine("------------------------------------------");
 
-            Console.WriteLine("Nachbarstädte von Bern: " );
-            foreach(var neighbour in cities.FindNeighbours(city1.Location, 9526.247927408867))
+            Console.WriteLine("Nachbarstädte von Bern: ");
+            foreach (var neighbour in cities.FindNeighbours(city1.Location, 9526.247927408867))
             {
                 Console.WriteLine(neighbour.Name);
             }

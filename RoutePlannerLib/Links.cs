@@ -7,6 +7,7 @@ using RoutePlannerLib;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
+using Serilog;
 
 namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 {
@@ -41,6 +42,7 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 		///	<returns>number	of read	route</returns>
 		public int ReadLinks(string filename)
 		{
+			Log.Information("ReadLinks started");
 			var previousCount = Count;
 			using (var reader = new StreamReader(filename))
 			{
@@ -55,12 +57,14 @@ namespace Fhnw.Ecnf.RoutePlanner.RoutePlannerLib
 
 						links.Add(new Link(city1, city2, city1.Location.Distance(city2.Location), TransportMode.Rail));
 					}
-					catch (KeyNotFoundException)
+					catch (KeyNotFoundException e)
 					{
 						//missing cities should be ignored
+						Log.Error(new FileNotFoundException("File not found"), "Link not found");
 					}
 				}
 			}
+			Log.Information("ReadLinks ended");
 			return Count - previousCount;
 		}
 

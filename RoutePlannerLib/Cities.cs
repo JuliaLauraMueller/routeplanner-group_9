@@ -1,6 +1,7 @@
 ﻿using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib;
 using Fhnw.Ecnf.RoutePlanner.RoutePlannerLib.Util;
-
+using Serilog;
+using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,8 +11,10 @@ using System.Linq;
 
 namespace RoutePlannerLib
 {
+
     public class Cities
     {
+
         private List<City> cityList = new List<City>();
 
         public IEnumerable<City> CityListEnumerator
@@ -95,19 +98,28 @@ namespace RoutePlannerLib
 
         public int ReadCities(string filename)
         {
+            Log.Information("ReadCities started");
             int counter = 0;
             using (var reader = new StreamReader(filename))
             {
-                IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines('\t');
-
-                var list = citiesAsStrings.Select(city => new City(city[0].Trim(), city[1].Trim(),
+                try
+                {
+                    IEnumerable<string[]> citiesAsStrings = reader.GetSplittedLines('\t');
+                    var list = citiesAsStrings.Select(city => new City(city[0].Trim(), city[1].Trim(),
                         int.Parse(city[2]), double.Parse(city[3],
                         CultureInfo.InvariantCulture), double.Parse(city[4],
                         CultureInfo.InvariantCulture))).ToArray();
 
-                cityList.AddRange(list);
-                counter = list.Count();
+                    cityList.AddRange(list);
+                    counter = list.Count();
+                } catch
+                {
+                    Log.Error(new FileNotFoundException(), "File not found");
+                    throw new FileNotFoundException("File not found");
+                }
+                
             }
+            Log.Information("ReadCities ended");
            return counter;
         }
 
